@@ -1,12 +1,21 @@
+.film__cards {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: var(--gap24);
+  flex-wrap: wrap;
+  margin:var(--gap24) var(--gap20);
+}
+
 .film__card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--gap24);
+  gap: var(--gap16);
 }
 
 .card__title {
-  color: var(--color-bla);
+  color: var(--color-black);
 
   /* Mobile/H3 */
   font-family: var(--ff-sans);
@@ -14,6 +23,8 @@
   font-weight: var(--fw-600);
   line-height: 1.75rem;
   /* 140% */
+  margin: 0rem;
+  max-width: 9.75rem ;
 }
 
 .film__affiche {
