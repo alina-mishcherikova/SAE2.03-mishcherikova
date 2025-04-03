@@ -3,10 +3,10 @@ let template = await templateFile.text();
 
 let MovieCard = {};
 
-MovieCard.format = function (FilmName, Title) {
+MovieCard.format = function (MoviemName, MovieImg) {
   let html = template;
-  html = html.replace("{{FilmName}}", FilmName);
-  html = html.replace("{{Title}}", Title);
+  html = html.replace("{{MovieName}}", MovieName);
+  html = html.replace("{{MovieImg}}", MovieImg);
   return html;
 };
 
