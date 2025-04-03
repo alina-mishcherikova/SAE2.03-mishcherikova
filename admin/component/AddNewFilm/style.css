@@ -1,0 +1,14 @@
+.addMovie__form {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap20);
+}
+
+.admin__input {
+  display: flex;
+  width: 335px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}

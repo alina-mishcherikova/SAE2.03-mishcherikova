@@ -24,3 +24,17 @@ function readMoviesController(){
     $movies = getAllMovies();
     return $movies;
 }
+
+function AddMovieController(){
+    $name = $_REQUEST['name'];
+    $realisateur = $_REQUEST['realisateur'];
+    $annee = $_REQUEST['annee'];
+    $duree = $_REQUEST['duree'];
+    $desc = $_REQUEST['desc'];
+    $categorie = $_REQUEST['categorie'];
+    $img = $_REQUEST['img'];
+    $url = $_REQUEST['url'];
+    $restriction = $_REQUEST['restriction'];
+    $ok = adddMovie($name, $realisateur, $annee, $duree, $desc,$categorie, $img,$url, $restriction);
+    return "Le film $name est ajouté";
+}

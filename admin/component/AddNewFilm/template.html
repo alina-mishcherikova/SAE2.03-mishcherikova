@@ -1,0 +1,33 @@
+<div class="addMovie">
+  <h4 class="addMovie__title"># Ajouter un film</h4>
+  <form class="addMovie__form">
+    <label class="form__label" for="titre">Titre du film</label>
+    <input class="admin__input" required type="text" name="titre" placeholder="Interstellar" />
+
+    <label class="form__label" for="realisateur">Réalisateur(s) du film</label>
+    <input class="admin__input"  required type="text" placeholder="Christopher Nolan" name="realisateur"pattern="[^0-9]*"
+      title="Numbers are not allowed" />
+
+    <label class="form__label" for=annee>Année de sortie</label>
+    <input class="admin__input"  required type="number" name="annee" min="1900" max="2099" step="1" placeholder="2014" />
+    
+    <label class="form__label" for="duree">Durée en minutes</label>
+    <input class="admin__input"  required type="number" name="duree"min="0" max="500" step="1" placeholder="169" />
+
+    <label class="form__label" for="desc">Description ou synopsis</label>
+    <input class="admin__input"  required type="text" name="desc" placeholder="Un groupe d'explorateurs voyage ...." />
+
+    <label class="form__label" for="categorie">Catégorie</label>
+    <input class="admin__input"  required type="text" name="categorie" placeholder="Science-fiction" />
+
+    <label class="form__label" for="img">Nom du fichier de l'affiche/ image du film</label>
+    <input class="admin__input"  required type="text" name="img" placeholder="interstellar.jpg" />
+
+    <label class="form__label" for="url">URL du trailer</label>
+    <input class="admin__input"  required type="url" name="url" placeholder="https://www.youtube.com/embed/...." />
+
+    <label class="form__label" for="restriction">Restrictions d'âge</label>
+    <input class="admin__input"  required type="text" name="restriction" placeholder="12" />
+    <input onclick="{{handler}}" type="button" value="Add" name="todo" />
+  </form>
+</div>
