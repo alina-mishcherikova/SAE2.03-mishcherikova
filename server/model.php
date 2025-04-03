@@ -19,11 +19,11 @@ define("DBLOGIN", "mishcherikova1");
 define("DBPWD", "mishcherikova1");
 
 
-function getFilms(){
+function getAllMovies(){
     // Connexion à la base de données
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     // Requête SQL pour récupérer le menu avec des paramètres
-    $sql = "select name, image";
+    $sql = "select id, name, image from Movie";
     // Prépare la requête SQL
     $stmt = $cnx->prepare($sql);
     // Exécute la requête SQL
