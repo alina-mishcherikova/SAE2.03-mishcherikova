@@ -18,7 +18,7 @@
     <input class="admin__input"  required type="text" name="desc" placeholder="Un groupe d'explorateurs voyage ...." />
 
     <label class="form__label" for="categorie">Catégorie</label>
-    <select onchange="{{handlerChange}}" name="categorie">
+    <select name="categorie">
       <option value="1">Action</option>
       <option value="2">Comédie</option>
       <option value="3">Drame</option>
@@ -39,6 +39,6 @@
 
     <label class="form__label" for="restriction">Restrictions d'âge</label>
     <input class="admin__input"  required type="text" name="restriction" placeholder="12" />
-    <input onclick="{{handlerUpdate}}" type="button" value="Add" name="todo" />
+    <input onclick="{{handler}}" class="formbutton"  type="button" value="Add" name="todo" />
   </form>
 </div>

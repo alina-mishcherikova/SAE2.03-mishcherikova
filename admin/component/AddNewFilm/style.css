@@ -12,3 +12,13 @@
   align-items: flex-start;
   gap: 12px;
 }
+
+.formbutton{
+  display: flex;
+width: 180px;
+padding: 12px 8px;
+justify-content: center;
+align-items: center;
+border-radius: 8px;
+background: #5f61cf;
+}

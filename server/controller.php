@@ -35,7 +35,7 @@ function AddMovieController(){
     $img = $_REQUEST['img'];
     $url = $_REQUEST['url'];
     $restriction = $_REQUEST['restriction'];
-    $ok = adddMovie($name, $realisateur, $annee, $duree, $desc,$categorie, $img,$url, $restriction);
+    $ok = addMovie($name, $realisateur, $annee, $duree, $desc,$categorie, $img,$url, $restriction);
     if ($ok!=0){
         return "Le film $name est ajouté";
       }
