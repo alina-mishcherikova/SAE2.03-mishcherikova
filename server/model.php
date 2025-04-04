@@ -32,15 +32,13 @@ function getAllMovies(){
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $res; // Retourne les résultats
 }
-function adddMovie($name, $realisateur, $annee, $duree, $desc,$categorie, $img,$url, $restriction){
-    // Connexion à la base de données
-    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD); 
-    // Requête SQL de mise à jour du menu avec des paramètres
+function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, $url, $restriction) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
     $sql = "INSERT INTO Movie (name, year, length, description, director, id_category, image, trailer, min_age)
-        VALUES (:name, :year, :length, :description, :director, :id_category, :image, :trailer, :min_age)";
-    // Prépare la requête SQL
+            VALUES (:name, :year, :length, :description, :director, :id_category, :image, :trailer, :min_age)";
+
     $stmt = $cnx->prepare($sql);
-    // Lie les paramètres aux valeurs
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':year', $annee);
     $stmt->bindParam(':length', $duree);
@@ -51,9 +49,6 @@ function adddMovie($name, $realisateur, $annee, $duree, $desc,$categorie, $img,$
     $stmt->bindParam(':trailer', $url);
     $stmt->bindParam(':min_age', $restriction);
 
-    // Exécute la requête SQL
     $stmt->execute();
-    // Récupère le nombre de lignes affectées par la requête
-    $res = $stmt->rowCount(); 
-    return $res; // Retourne le nombre de lignes affectées
+    return $stmt->rowCount();
 }

@@ -4,10 +4,9 @@ let template = await templateFile.text();
 
 let AddNewFilm = {};
 
-  AddNewFilm.format = function (handlerC, handlerU) {
+  AddNewFilm.format = function (handler) {
     let html = template;
-    html = html.replaceAll("{{handlerChange}}", handlerC);
-    html = html.replace("{{handlerUpdate}}", handlerU);
+    html = html.replaceAll("{{handler}}", handler);
     return html;
   };
 

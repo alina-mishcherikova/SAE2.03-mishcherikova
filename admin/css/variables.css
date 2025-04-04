@@ -4,7 +4,7 @@
 
 :root {
   /* Primitive Tokens */
-  --color-black: hsl(0, 0%, 14%);
+  --color-black: hsl(253, 69%, 8%);
   --color-white: hsl(0, 0%, 100%);
   --color-gray-light: hsl(0, 0%, 80%);
   --color-gray: hsl(0, 0%, 50%);
@@ -14,11 +14,17 @@
 
   --ff-sans: "Inter", sans-serif;
   --fw-600:600;
-  --fs-mh3:1.25rem;
+  --fw-500:500;
+  --fs-bmm:1.125rem;
+  --fs-m24:1.5rem;
   /* Sementic Tokens */
   --color-fg: var(--color-white);
   --color-bg: var(--color-gray-dark);
   --color-accent: var(--color-green);
   /*Gap*/
   --gap24:1.5rem;
+  --gap12:0.75rem;
+  /*Padding*/
+  --pad20:1.25rem;
+  --pad12:0.75rem;
 }
