@@ -16,15 +16,31 @@
       import {AddNewFilm} from "./component/AddNewFilm/script.js"
 
       window.C = {};
-      C.handlerAddMovie = async function () {
+      C.handlerUpdate = async function () {
         let form = document.querySelector(".addMovie__form");
         let fd = new FormData(form);
         let res = await DataMovie.update(fd);
         V.renderLog(res);
-      }
+      };
+
+      C.handlerSelect = async function () {
+        let form = document.querySelector(".addMovie__form");
+        let fd = new FormData(form);
+        let categorie = fd.get("categorie");
+        let res = await DataMovie.request(categorie);
+        if (res.length > 0) {
+          AddNewFilm.autoFill(res[0]);
+          V.renderLog(
+            "Categorie trouvé " + categorie );
+        } else {
+          V.renderLog(
+            "Aucun categorie trouvé pour " + categorie);
+        }
+      };
+
       C.start = function () {
         V.renderLog("Démarrage de l'application");
-        V.renderMovie("C.handlerAddMovie()");
+        V.renderMovie("C.handlerSelect()", "C.handlerUpdate()");
       };
 
       window.V = {};
@@ -33,9 +49,9 @@
         let content = document.querySelector("#log");
         content.innerHTML = Log.format(txt);
       };
-      V.renderMovie = function (handler) {
+      V.renderMovie = function (handlerC, handlerU) {
         let content = document.querySelector("#addFilm");
-        content.innerHTML = AddNewFilm.format(handler);
+        content.innerHTML = AddNewFilm.format(handlerC, handlerU);
       };
 
       C.start();

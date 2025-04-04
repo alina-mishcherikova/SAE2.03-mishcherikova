@@ -18,8 +18,19 @@
     <input class="admin__input"  required type="text" name="desc" placeholder="Un groupe d'explorateurs voyage ...." />
 
     <label class="form__label" for="categorie">Catégorie</label>
-    <input class="admin__input"  required type="text" name="categorie" placeholder="Science-fiction" />
-
+    <select onchange="{{handlerChange}}" name="categorie">
+      <option value="1">Action</option>
+      <option value="2">Comédie</option>
+      <option value="3">Drame</option>
+      <option value="4">Science-fiction</option>
+      <option value="5">Animation</option>
+      <option value="6">Thriller</option>
+      <option value="7">Horreur</option>
+      <option value="8">Aventure</option>
+      <option value="9">Fantaisie</option>
+      <option value="10">Documentaire</option>
+    </select>
+    
     <label class="form__label" for="img">Nom du fichier de l'affiche/ image du film</label>
     <input class="admin__input"  required type="text" name="img" placeholder="interstellar.jpg" />
 
@@ -28,6 +39,6 @@
 
     <label class="form__label" for="restriction">Restrictions d'âge</label>
     <input class="admin__input"  required type="text" name="restriction" placeholder="12" />
-    <input onclick="{{handler}}" type="button" value="Add" name="todo" />
+    <input onclick="{{handlerUpdate}}" type="button" value="Add" name="todo" />
   </form>
 </div>
