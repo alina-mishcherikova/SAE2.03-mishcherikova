@@ -19,12 +19,6 @@ DataMovie.update = async function (fdata) {
         body: fdata
     };
     let answer = await fetch(HOST_URL + "/server/script.php?todo=add", config);
-
-    if (!answer.ok) {
-        let errorText = await answer.text();
-        throw new Error("Erreur serveur: " + errorText);
-    }
-    
     let data = await answer.json();
     return data;
 }

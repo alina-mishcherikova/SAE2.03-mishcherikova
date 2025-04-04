@@ -1,0 +1,49 @@
+.film__cards {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: var(--gap24);
+  flex-wrap: wrap;
+  margin: var(--gap24) var(--gap20);
+}
+
+.film__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap16);
+}
+
+.card__title {
+  color: var(--color-black);
+
+  /* Mobile/H3 */
+  font-family: var(--ff-sans);
+  font-size: var(--fs-mh3);
+  font-weight: var(--fw-600);
+  line-height: 140%;
+  margin: 0rem;
+  max-width: 9.75rem;
+}
+
+.film__affiche {
+  width: 9.75rem;
+  height: 14.625rem;
+  border-radius: 8px;
+}
+
+@media (width > 75rem) {
+  .film__affiche {
+    width: 19.375rem;
+    height: 29.0625rem;
+  }
+
+  .card__title {
+    color: var(--color-text-text-secondary, #3B3842);
+
+    /* Desktop/H3 */
+    font-size: var(--fs-dh3);
+    line-height: 140%;
+    max-width: 19rem;
+  }
+}

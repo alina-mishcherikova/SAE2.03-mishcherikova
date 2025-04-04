@@ -18,6 +18,7 @@
     import { NavBar } from "./component/NavBar/script.js";
     import { MovieCard } from "./component/Movie/script.js";
 
+
     // Controleur
     // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
     // Une fois l'application terminée, on pourrait remettre let C.
@@ -27,6 +28,9 @@
       alert(
         "Ceci est une base de projet pour la SAE2.03 édition 2025. Bonne chance !"
       );
+    };
+    C.handlerFilm = function(){
+      window.location.href = "film.html";
     };
     C.getMovie = async function () {
       let data = await DataMovie.requestMovies();

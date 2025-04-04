@@ -7,5 +7,11 @@ DataMovie.requestMovies = async function () {
     let data = await answer.json();
     return data;
 }
+DataMovie.requestMovieDetails = async function(id) {
+    let response = await fetch(HOST_URL + "/server/script.php?todo=moviedetail&id=" + id);
+    let data = await response.json();
+    return data;
+  };
+  
 
 export { DataMovie };

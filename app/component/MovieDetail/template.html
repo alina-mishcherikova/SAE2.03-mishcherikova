@@ -1,0 +1,51 @@
+<section class="movie-detail">
+    <h2 class="movie-detail__title">{{name}}</h2>
+  
+    <img 
+      src="https://mmi.unilim.fr/~mishcherikova1/SAE2.03-mishcherikova/server/images/{{image}}" 
+      alt="Affiche du film"
+      class="movie-detail__poster" 
+    />
+  
+    <div class="movie-detail__content">
+      <p class="movie-detail__description">{{desc}}</p>
+  
+      <div class="movie-detail__info-group">
+        <div class="movie-info">
+          <h4 class="movie-info__label">Réalisé par :</h4>
+          <p class="movie-info__value">{{realisateur}}</p>
+        </div>
+  
+        <div class="movie-info">
+          <h4 class="movie-info__label">Année de sortie :</h4>
+          <p class="movie-info__value">{{year}}</p>
+        </div>
+  
+        <div class="movie-info">
+          <h4 class="movie-info__label">Catégorie :</h4>
+          <p class="movie-info__value">{{category}}</p>
+        </div>
+  
+        <div class="movie-info">
+          <h4 class="movie-info__label">Restrictions d'âge :</h4>
+          <p class="movie-info__value">{{min_age}}</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="movie-detail__trailer">
+      <h3 class="movie-detail__trailer-title">Trailer</h3>
+      <iframe 
+        width="560" 
+        height="315"
+        src="{{VideoUrl}}" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+               gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+  

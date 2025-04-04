@@ -25,6 +25,16 @@ function readMoviesController(){
     return $movies;
 }
 
+function MovieDetailController() {
+
+  $id = $_REQUEST['id'];
+
+  $movie = MovieDetail($id);
+
+  return $movie;
+}
+
+
 function AddMovieController(){
     $name = $_REQUEST['name'];
     $realisateur = $_REQUEST['realisateur'];
@@ -37,7 +47,7 @@ function AddMovieController(){
     $restriction = $_REQUEST['restriction'];
     $ok = addMovie($name, $realisateur, $annee, $duree, $desc,$categorie, $img,$url, $restriction);
     if ($ok!=0){
-        return "Le film $name est ajouté";
+        return "Le film $name a été ajouté avec succès.";
       }
       else{
         return false;

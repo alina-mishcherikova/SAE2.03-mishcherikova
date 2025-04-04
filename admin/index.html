@@ -1,46 +1,74 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <title>SAE2.03 ADMIN</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/base.css" />
-  </head>
-  <body>
-    <section id="log"></section>
-    <section id="addFilm"></section>
 
-    <script type="module">
-       import {DataMovie} from "./data/dataMovie.js";
-      import { Log } from "./component/Log/script.js";
-      import {AddNewFilm} from "./component/AddNewFilm/script.js"
+<head>
+  <title>SAE2.03 ADMIN</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/base.css" />
+</head>
 
-      window.C = {};
+<body>
+  <section id="log"></section>
+  <section id="addFilm"></section>
 
-      C.handlerAdd = async function () {
-        let form = document.querySelector(".addMovie__form");
-        let fd = new FormData(form);
-        let res = await DataMovie.update(fd);
-        V.renderLog(res);
-      };
+  <script type="module">
+    import { DataMovie } from "./data/dataMovie.js";
+    import { Log } from "./component/Log/script.js";
+    import { AddNewFilm } from "./component/AddNewFilm/script.js"
 
-      C.start = function () {
-        V.renderLog("Démarrage de l'application");
-        V.renderMovie("C.handlerAdd()");
-      };
+    window.C = {};
 
-      window.V = {};
+    C.handlerAdd = async function () {
+      let form = document.querySelector(".addMovie__form");
+      let fd = new FormData(form);
 
-      V.renderLog = function (txt) {
-        let content = document.querySelector("#log");
-        content.innerHTML = Log.format(txt);
-      };
-      V.renderMovie = function (handler) {
-        let content = document.querySelector("#addFilm");
-        content.innerHTML = AddNewFilm.format(handler);
-      };
+      const requiredFields = ["name", "realisateur", "annee", "duree", "desc", "categorie", "img", "url", "restriction"];
+      for (let field of requiredFields) {
+        if (!fd.get(field) || fd.get(field).trim() === "") {
+          V.renderLog(`Le champ "${field}" est requis.`);
+          return;
+        }
+      }
+      const age = Number(fd.get("restriction"));
+      if (age < 0 || age > 21) {
+        V.renderLog("Âge non valide (0 à 21).");
+        return;
+      }
 
-      C.start();
-    </script>
-  </body>
+      const annee = Number(fd.get("annee"));
+      if (annee < 1900 || annee > 2099) {
+        V.renderLog("Année non valide (1900 à 2099).");
+        return;
+      }
+
+      const duree = Number(fd.get("duree"));
+      if (duree <= 0 || duree > 500) {
+        V.renderLog("Durée non valide (1 à 500 min).");
+        return;
+      }
+      let res = await DataMovie.update(fd);
+      V.renderLog(res);
+    };
+
+    C.start = function () {
+      V.renderLog("Démarrage de l'application");
+      V.renderMovie("C.handlerAdd()");
+    };
+
+    window.V = {};
+
+    V.renderLog = function (txt) {
+      let content = document.querySelector("#log");
+      content.innerHTML = Log.format(txt);
+    };
+    V.renderMovie = function (handler) {
+      let content = document.querySelector("#addFilm");
+      content.innerHTML = AddNewFilm.format(handler);
+    };
+
+    C.start();
+  </script>
+</body>
+
 </html>

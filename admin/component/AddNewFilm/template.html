@@ -3,32 +3,32 @@
   <form class="addMovie__form">
 
     <div class="form__field">
-    <label class="form__label" for="titre">Titre du film</label>
+    <label class="form__label" for="titre">Titre du film *</label>
     <input class="admin__input" required type="text" name="name" placeholder="Interstellar" />
     </div>
     <div class="form__field">
-      <label class="form__label" for="realisateur">Réalisateur(s) du film</label>
+      <label class="form__label" for="realisateur">Réalisateur(s) du film *</label>
     <input class="admin__input"  required type="text" placeholder="Christopher Nolan" name="realisateur"pattern="[^0-9]*"
       title="Numbers are not allowed" />
     </div>
     
     <div class="form__field">
-    <label class="form__label" for=annee>Année de sortie</label>
+    <label class="form__label" for=annee>Année de sortie *</label>
     <input class="admin__input"  required type="number" name="annee" min="1900" max="2099" step="1" placeholder="2014" />
     </div>
 
     <div class="form__field">
-    <label class="form__label" for="duree">Durée en minutes</label>
+    <label class="form__label" for="duree">Durée en minutes *</label>
     <input class="admin__input"  required type="number" name="duree"min="0" max="500" step="1" placeholder="169" />
     </div>
 
     <div class="form__field">
-    <label class="form__label" for="desc">Description ou synopsis</label>
+    <label class="form__label" for="desc">Description ou synopsis *</label>
     <input class="admin__input"  required type="text" name="desc" placeholder="Un groupe d'explorateurs voyage ...." />
     </div>
 
     <div class="form__field">
-    <label class="form__label" for="categorie">Catégorie</label>
+    <label class="form__label" for="categorie">Catégorie *</label>
     <select name="categorie">
       <option value="1">Action</option>
       <option value="2">Comédie</option>
@@ -53,8 +53,8 @@
     </div>
 
     <div class="form__field">
-    <label class="form__label" for="restriction">Restrictions d'âge</label>
-    <input class="admin__input"  required type="text" name="restriction" placeholder="12" />
+    <label class="form__label" for="restriction">Restrictions d'âge *</label>
+    <input class="admin__input"  required type="number" name="restriction" placeholder="12" />
     </div>
     <input onclick="{{handler}}" class="formbutton"  type="button" value="Add" name="todo" />
   </form>

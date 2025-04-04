@@ -52,3 +52,26 @@ function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, 
     $stmt->execute();
     return $stmt->rowCount();
 }
+
+function MovieDetail($id) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+
+    // Requête SQL sécurisée
+    $sql = "SELECT name, year, length, description, director, id_category, image, trailer, min_age 
+            FROM Movie 
+            WHERE id = :id";
+
+    // Prépare la requête SQL
+    $stmt = $cnx->prepare($sql);
+
+    // Lie le paramètre :id à la variable $id
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+    // Exécute la requête SQL
+    $stmt->execute();
+
+    // Récupère les résultats sous forme d'objet
+    $res = $stmt->fetch(PDO::FETCH_OBJ); // тільки один фільм
+
+    return $res; // Retourne les résultats
+}
