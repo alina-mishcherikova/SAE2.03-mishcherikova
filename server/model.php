@@ -73,6 +73,20 @@ function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, 
     return $stmt->rowCount();
 }
 
+function addUser($name, $avatar, $age){
+
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
+    $sql = "INSERT INTO Utilisateur (name, avatar, age)
+            VALUES (:name, :avatar, :age)";
+            
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':avatar', $avatar);
+    $stmt->bindParam(':age', $age);
+    $stmt->execute();
+    return $stmt->rowCount();
+}
 
 function MovieDetail($id) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);

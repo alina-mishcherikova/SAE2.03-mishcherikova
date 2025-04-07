@@ -11,15 +11,17 @@
 <body>
   <section id="log"></section>
   <section id="addFilm"></section>
+  <section id="addUser"></section>
 
   <script type="module">
     import { DataMovie } from "./data/dataMovie.js";
     import { Log } from "./component/Log/script.js";
     import { AddNewFilm } from "./component/AddNewFilm/script.js"
+    import { AddUser } from "./component/AddUser/script.js"
 
     window.C = {};
 
-    C.handlerAdd = async function () {
+    C.handlerAddMovie = async function () {
       let form = document.querySelector(".addMovie__form");
       let fd = new FormData(form);
 
@@ -51,9 +53,26 @@
       V.renderLog(res);
     };
 
+    C.handlerAddUser = async function () {
+      let form = document.querySelector(".addUser__form");
+      let fd = new FormData(form);
+
+      const requiredFields = ["name", "date"];
+      for (let field of requiredFields) {
+        if (!fd.get(field) || fd.get(field).trim() === "") {
+          V.renderLog(`Le champ "${field}" est requis.`);
+          return;
+        }
+      }
+     
+      let res = await DataMovie.addUser(fd);
+      V.renderLog(res);
+    };
+
     C.start = function () {
       V.renderLog("Démarrage de l'application");
-      V.renderMovie("C.handlerAdd()");
+      V.renderMovie("C.handlerAddMovie()");
+      V.renderUser("C.handlerAddUser()");
     };
 
     window.V = {};
@@ -65,6 +84,10 @@
     V.renderMovie = function (handler) {
       let content = document.querySelector("#addFilm");
       content.innerHTML = AddNewFilm.format(handler);
+    };
+    V.renderUser = function (handler) {
+      let content = document.querySelector("#addUser");
+      content.innerHTML = AddUser.format(handler);
     };
 
     C.start();

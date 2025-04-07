@@ -7,21 +7,34 @@ DataMovie.addMovies = async function (fdata) {
         method: "POST",
         body: fdata
     };
-    let answer = await fetch(HOST_URL + "/server/script.php?todo=add", config);
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=addMovie", config);
     
 
     let data = await answer.json();
     return data;
 };
+
 DataMovie.update = async function (fdata) {
     let config = {
         method: "POST",
         body: fdata
     };
-    let answer = await fetch(HOST_URL + "/server/script.php?todo=add", config);
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=addMovie", config);
     let data = await answer.json();
     return data;
-}
+};
+
+DataMovie.addUser = async function (fdata) {
+    let config = {
+        method: "POST",
+        body: fdata
+    };
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=addUser", config);
+    
+
+    let data = await answer.json();
+    return data;
+};
 
 
 export { DataMovie };
