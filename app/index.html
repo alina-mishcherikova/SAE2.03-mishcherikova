@@ -18,6 +18,7 @@
     import { DataMovie } from "./data/dataMovie.js";
     import { NavBar } from "./component/NavBar/script.js";
     import { MovieCard } from "./component/Movie/script.js";
+    import { MovieCategory } from "./component/MovieCategory/script.js";
 
     // Controleur
     // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -34,9 +35,10 @@
       );
     };
     C.getMovie = async function () {
-      let data = await DataMovie.requestMovies();
-      V.renderMovieCard(data);
+      let data = await DataMovie.requestMoviesByCategory();
+      V.renderMoviesByCategory(data);
     }
+
     C.handlerDetail = async function (id) {
       const film = await DataMovie.requestMovieDetails(id);
       V.renderMovieDetail(film)
@@ -69,6 +71,13 @@
     V.renderMovieDetail = function (film) {
       let content = document.querySelector("#content");
       content.innerHTML = MovieDetail.format(film);
+    };
+    V.renderMoviesByCategory = function (grouped) {
+      let content = document.querySelector("#content");
+      content.innerHTML = "";
+      for (let category in grouped) {
+        content.innerHTML += MovieCategory.format(category, grouped[category]);
+      }
     };
 
     C.start(); // Démarre l'application

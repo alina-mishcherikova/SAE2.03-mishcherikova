@@ -23,7 +23,11 @@ function getAllMovies(){
     // Connexion à la base de données
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     // Requête SQL pour récupérer le menu avec des paramètres
-    $sql = "select id, name, image from Movie";
+    $sql = "SELECT 
+            Movie.id AS id, Movie.name, Movie.image, Category.name AS category
+            FROM Movie
+            INNER JOIN Category ON Movie.id_category = Category.id
+            ORDER BY Category.name";
     // Prépare la requête SQL
     $stmt = $cnx->prepare($sql);
     // Exécute la requête SQL
@@ -32,6 +36,7 @@ function getAllMovies(){
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $res; // Retourne les résultats
 }
+
 function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, $url, $restriction) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
 
@@ -53,11 +58,24 @@ function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, 
     return $stmt->rowCount();
 }
 
+
 function MovieDetail($id) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT name, year, length, description, director, id_category, image, trailer, min_age 
+
+    $sql = "SELECT 
+                Movie.name, 
+                year, 
+                length, 
+                description, 
+                director, 
+                Category.name AS category, 
+                image, 
+                trailer, 
+                min_age 
             FROM Movie 
-            WHERE id = :id";
+            INNER JOIN Category ON Movie.id_category = Category.id
+            WHERE Movie.id = :id";
+
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();

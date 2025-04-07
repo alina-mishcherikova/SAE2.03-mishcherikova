@@ -51,16 +51,20 @@ if ( isset($_REQUEST['todo']) ){
   // en fonction de la valeur de 'todo', on appelle la fonction de contrôle appropriée
   // peut s'écrire aussi avec des if/else
   switch($todo){
-    case 'readmovies':
+    case 'readMovies':
       $data = readMoviesController();
       break;
 
-      case 'moviedetail':
+      case 'movieDetail':
         $data = MovieDetailController();
         break;
 
       case 'add':
         $data = AddMovieController();
+        break;
+
+      case 'moviesByCategory':
+        $data = readMoviesByCategoryController();
         break;
 
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée

@@ -1,0 +1,6 @@
+.films__category{
+  padding: var(--gap20) var(--gap16);
+}
+.film__cards{
+margin:var(--gap24) 0rem;
+}

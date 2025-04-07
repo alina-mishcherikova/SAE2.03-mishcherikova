@@ -53,3 +53,15 @@ function AddMovieController(){
         return false;
       }
 }
+
+function readMoviesByCategoryController() {
+  $movies = getAllMovies();
+  $grouped = [];
+
+  foreach ($movies as $movie) {
+      $category = $movie->category;
+      $grouped[$category][] = $movie;
+  }
+  error_log(json_encode($grouped));
+  return $grouped; 
+}

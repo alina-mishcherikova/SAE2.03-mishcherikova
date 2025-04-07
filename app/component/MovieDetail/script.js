@@ -11,7 +11,7 @@ MovieDetail.format = function (film) {
   html = html.replace("{{desc}}", film.description);
   html = html.replace("{{realisateur}}", film.director);
   html = html.replace("{{year}}", film.year);
-  html = html.replace("{{category}}", film.id_category);
+  html = html.replace("{{category}}", film.category);
   html = html.replace("{{min_age}}", film.min_age + "+");
   html = html.replace("{{VideoUrl}}", film.trailer);
 
