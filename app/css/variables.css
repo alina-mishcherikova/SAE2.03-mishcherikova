@@ -11,13 +11,18 @@
 
   /*Size*/
   --fs-mh3:1.25rem;
+  --fs-mh2:1.5rem;
   --fs-dh3:1.75rem;
+  --fs-gs:0.875rem;
+  --fs-gm:1rem;
   /*Font Weight*/
   --fw-600:600;
   /*Gap*/
   --gap16:1rem;
   --gap20:1.25rem;
   --gap24:1.5rem;
+  --gap40:2.5rem;
+  --gap48:3rem;
 
   /* Sementic Tokens */
   --color-fg: var(--color-white);

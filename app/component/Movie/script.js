@@ -15,7 +15,7 @@ MovieCard.format = function (obj) {
     let card = templateCards;
     card = card.replace("{{name}}", c.name);
     card = card.replace("{{image}}", c.image);
-    card = card.replace("{{MovieId}}", c.id);
+    card = card.replace('{{onclick}}', `C.handlerDetail(${c.id})`);
     cardsHTML += card;
   }
 

@@ -29,7 +29,6 @@
 .film__affiche {
   width: 9.75rem;
   height: 14.625rem;
-  border-radius: 8px;
 }
 
 @media (width > 75rem) {

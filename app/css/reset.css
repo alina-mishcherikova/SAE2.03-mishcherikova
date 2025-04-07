@@ -9,3 +9,15 @@ ul {
   margin: 0;
   list-style: none;
 }
+h1,h2,h3,h4,h5,p,figcaption{
+  font-family: var(--ff-sans);
+  margin:0rem;
+  padding:0rem;
+}
+figure{
+  display: flex;
+  flex-direction: column;
+  margin:0rem;
+  padding:0rem;
+  gap:var(--gap16);
+}
