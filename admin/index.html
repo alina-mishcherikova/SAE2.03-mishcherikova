@@ -10,14 +10,17 @@
 
 <body>
   <section id="log"></section>
-  <section id="addFilm"></section>
-  <section id="addUser"></section>
+  <section class="sections">
+    <section id="addFilm"></section>
+    <section id="profileForm"></section>
+  </section>
+
 
   <script type="module">
     import { DataMovie } from "./data/dataMovie.js";
     import { Log } from "./component/Log/script.js";
     import { AddNewFilm } from "./component/AddNewFilm/script.js"
-    import { AddUser } from "./component/AddUser/script.js"
+    import { AddProfile } from "./component/ProfileForm/script.js"
 
     window.C = {};
 
@@ -53,8 +56,8 @@
       V.renderLog(res);
     };
 
-    C.handlerAddUser = async function () {
-      let form = document.querySelector(".addUser__form");
+    C.handlerAddProfile = async function () {
+      let form = document.querySelector(".Profile__form");
       let fd = new FormData(form);
 
       const requiredFields = ["name", "date"];
@@ -64,15 +67,15 @@
           return;
         }
       }
-     
-      let res = await DataMovie.addUser(fd);
+
+      let res = await DataMovie.addProfile(fd);
       V.renderLog(res);
     };
 
     C.start = function () {
       V.renderLog("Démarrage de l'application");
       V.renderMovie("C.handlerAddMovie()");
-      V.renderUser("C.handlerAddUser()");
+      V.renderProfile("C.handlerAddProfile()");
     };
 
     window.V = {};
@@ -85,9 +88,9 @@
       let content = document.querySelector("#addFilm");
       content.innerHTML = AddNewFilm.format(handler);
     };
-    V.renderUser = function (handler) {
-      let content = document.querySelector("#addUser");
-      content.innerHTML = AddUser.format(handler);
+    V.renderProfile = function (handler) {
+      let content = document.querySelector("#profileForm");
+      content.innerHTML = AddProfile.format(handler);
     };
 
     C.start();

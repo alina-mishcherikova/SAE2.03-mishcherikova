@@ -24,7 +24,9 @@
   /*Gap*/
   --gap24:1.5rem;
   --gap12:0.75rem;
+  --gap40:2.5rem;
   /*Padding*/
   --pad20:1.25rem;
   --pad12:0.75rem;
+  --pad48: 3rem; 
 }

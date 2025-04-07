@@ -53,11 +53,11 @@ function AddMovieController(){
         return false;
       }
 }
-function AddUserController(){
+function AddProfileController(){
   $name = $_REQUEST['name'];
   $avatar = $_REQUEST['avatar'];
   $age = $_REQUEST['age'];
-  $ok = addUser($name, $avatar, $age);
+  $ok = addProfile($name, $avatar, $age);
   if ($ok!=0){
       return "Le profil $name a été ajouté avec succès.";
     }
@@ -76,4 +76,9 @@ function readMoviesByCategoryController() {
   }
   error_log(json_encode($grouped));
   return $grouped; 
+}
+
+function ReadProfileController(){
+  $profiles = getProfiles();
+  return $profiles;
 }

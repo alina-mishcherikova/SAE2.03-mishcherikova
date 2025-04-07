@@ -24,12 +24,12 @@ DataMovie.update = async function (fdata) {
     return data;
 };
 
-DataMovie.addUser = async function (fdata) {
+DataMovie.addProfile = async function (fdata) {
     let config = {
         method: "POST",
         body: fdata
     };
-    let answer = await fetch(HOST_URL + "/server/script.php?todo=addUser", config);
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=addProfile", config);
     
 
     let data = await answer.json();

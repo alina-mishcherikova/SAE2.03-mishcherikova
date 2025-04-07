@@ -1,2 +1,2 @@
 Integration 5:
--j'ai rajouté une table Utilisateur.. (stocke l'age)
+- J’ai ajouté le tableau Utilisateur avec les champs id, nom, avatar, âge. Je vais enregistrer la date de naissance.

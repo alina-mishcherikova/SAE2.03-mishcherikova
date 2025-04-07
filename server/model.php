@@ -73,7 +73,7 @@ function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, 
     return $stmt->rowCount();
 }
 
-function addUser($name, $avatar, $age){
+function addProfile($name, $avatar, $age){
 
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
 
@@ -110,4 +110,13 @@ function MovieDetail($id) {
     $stmt->execute();
     $res = $stmt->fetch(PDO::FETCH_OBJ);
     return $res;
+}
+
+function getProfiles(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT id, name,avatar 
+            FROM Utilisateur";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
