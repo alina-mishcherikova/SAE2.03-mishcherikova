@@ -94,6 +94,23 @@ function addProfile($name, $avatar, $date){
     return $stmt->rowCount();
 }
 
+function updateProfile($id, $name, $avatar, $date){
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
+    $sql = "UPDATE Utilisateur 
+            SET name = :name, avatar = :avatar, age = :date 
+            WHERE id = :id";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':avatar', $avatar);
+    $stmt->bindParam(':date', $date);
+
+    $stmt->execute();
+    return $stmt->rowCount();
+}
+
 
 function MovieDetail($id) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
@@ -121,7 +138,7 @@ function MovieDetail($id) {
 
 function getProfiles(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT id, name, avatar, YEAR(CURDATE()) - YEAR(age) AS age FROM Utilisateur";
+    $sql = "SELECT id, name, avatar, DATE_FORMAT(age, '%Y-%m-%d') AS age FROM Utilisateur";
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);

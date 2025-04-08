@@ -1,0 +1,19 @@
+let HOST_URL = "https://mmi.unilim.fr/~mishcherikova1/SAE2.03-mishcherikova";
+
+let DataProfile = {};
+DataProfile.read = async function (name) {
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readProfile");
+    let data = await answer.json();
+    return data;
+};
+DataProfile.update = async function (formData) {
+    const response = await fetch(HOST_URL + "/server/script.php?todo=updateProfile", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    return data;
+  };
+  
+
+export { DataProfile };

@@ -34,7 +34,7 @@ function MovieDetailController() {
 
 
 function AddMovieController(){
-    $name = $_REQUEST['name'];
+    $name = $_REQUEST['Fname'];
     $realisateur = $_REQUEST['realisateur'];
     $annee = $_REQUEST['annee'];
     $duree = $_REQUEST['duree'];
@@ -88,4 +88,19 @@ function readMoviesByCategoryController($age) {
 function ReadProfileController(){
   $profiles = getProfiles();
   return $profiles;
+}
+
+function UpdateProfileController(){
+  $id = $_REQUEST['id'];
+  $name = $_REQUEST['name'];
+  $avatar = $_REQUEST['avatar'];
+  $date = $_REQUEST['date'];
+
+  $ok = updateProfile($id, $name, $avatar, $date);
+
+  if ($ok != 0){
+      return "Le profil a été modifié avec succès.";
+  } else {
+      return false;
+  }
 }

@@ -13,6 +13,8 @@
   .log__list {
     font-size: smaller;
     color: var(--color-accent);
+    width: 100%;
+    height: 100%;
     overflow-y: scroll;
     .last {
       animation: fondu-en-entree 1s ease-in-out;
