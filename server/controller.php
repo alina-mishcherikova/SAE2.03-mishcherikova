@@ -21,16 +21,14 @@
 require("model.php");
 
 function readMoviesController(){
-    $movies = getAllMovies();
-    return $movies;
+  $profileId = $_REQUEST['profile_id'];
+  $movies = getAllMovies($profileId);
+  return $movies;
 }
 
 function MovieDetailController() {
-
   $id = $_REQUEST['id'];
-
   $movie = MovieDetail($id);
-
   return $movie;
 }
 
@@ -56,8 +54,8 @@ function AddMovieController(){
 function AddProfileController(){
   $name = $_REQUEST['name'];
   $avatar = $_REQUEST['avatar'];
-  $age = $_REQUEST['age'];
-  $ok = addProfile($name, $avatar, $age);
+  $date = $_REQUEST['date'];
+  $ok = addProfile($name, $avatar, $date);
   if ($ok!=0){
       return "Le profil $name a été ajouté avec succès.";
     }
@@ -66,14 +64,23 @@ function AddProfileController(){
     }
 }
 
-function readMoviesByCategoryController() {
-  $movies = getAllMovies();
+function readMoviesByCategoryController($age) {
+  $movies = getAllMovies($age);
   $grouped = [];
 
-  foreach ($movies as $movie) {
+  $grouped = [];
+  $movieCount = count($movies);
+  for ($i = 0; $i < $movieCount; $i++) {
+      $movie = $movies[$i];
       $category = $movie->category;
+
+      if (!isset($grouped[$category])) {
+          $grouped[$category] = [];
+      }
+
       $grouped[$category][] = $movie;
   }
+
   error_log(json_encode($grouped));
   return $grouped; 
 }

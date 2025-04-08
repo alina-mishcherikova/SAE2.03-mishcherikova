@@ -9,10 +9,16 @@ let NavBar = {};
 NavBar.format = function (hAbout, profiles) {
   let html = template;
   let optionsHTML = "";
-
+  
   for (let profile of profiles) {
     let option = templateProfile;
     option = option.replace("{{name}}", profile.name);
+    option = option.replace("{{id}}", profile.id);
+
+    if (profile.id == activeProfileId) {
+      option = option.replace(">", " selected>");
+    }
+
     optionsHTML += option;
   }
 

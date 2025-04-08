@@ -26,11 +26,20 @@
     // Une fois l'application terminée, on pourrait remettre let C.
     window.C = {};
 
+    let activeProfileId = 0;
+    let activeProfileAge = 0;
+
     C.start = async function () {
-  let profiles = await DataProfile.read();
-  V.renderNavBar("C.handlerAbout()", profiles);
-  C.getMovie();
-};
+        let profiles = await DataProfile.read();
+        if (profiles.length > 0) {
+          activeProfileId = profiles[0].id;
+          activeProfileAge = profiles[0].age;
+        }
+
+        // V.renderNavBar("C.handlerAbout()", profiles);
+        C.getMovie();
+    };
+
 
     C.handlerAbout = function () {
       alert(
@@ -38,7 +47,7 @@
       );
     };
     C.getMovie = async function () {
-      let data = await DataMovie.requestMoviesByCategory();
+      let data = await DataMovie.requestMoviesByCategory(activeProfileAge);
       V.renderMoviesByCategory(data);
     }
 

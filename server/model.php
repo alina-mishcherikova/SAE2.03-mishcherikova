@@ -36,20 +36,26 @@ define("DBPWD", "mishcherikova1");
 //     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
 //     return $res; // Retourne les résultats
 // }
-function getAllMovies(){
-    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+function getAllMovies($age){
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    
     $sql = "SELECT 
-              Movie.id AS id, 
-              Movie.name, 
-              Movie.image, 
-              Category.name AS category 
+                Movie.id, 
+                Movie.name, 
+                Movie.image, 
+                Movie.min_age,
+                Category.name AS category
             FROM Movie
             INNER JOIN Category ON Movie.id_category = Category.id
+            WHERE Movie.min_age <= :age
             ORDER BY Category.name";
+
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
+
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
+
 
 
 function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, $url, $restriction) {
@@ -73,17 +79,17 @@ function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, 
     return $stmt->rowCount();
 }
 
-function addProfile($name, $avatar, $age){
+function addProfile($name, $avatar, $date){
 
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
 
-    $sql = "INSERT INTO Utilisateur (name, avatar, age)
-            VALUES (:name, :avatar, :age)";
+    $sql = "INSERT INTO Utilisateur (name, avatar, date)
+            VALUES (:name, :avatar, :date)";
             
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':avatar', $avatar);
-    $stmt->bindParam(':age', $age);
+    $stmt->bindParam(':age', $date);
     $stmt->execute();
     return $stmt->rowCount();
 }
@@ -114,8 +120,7 @@ function MovieDetail($id) {
 
 function getProfiles(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT id, name,avatar 
-            FROM Utilisateur";
+    $sql = "SELECT id, name, avatar, YEAR(CURDATE()) - YEAR(age) AS age FROM Utilisateur";
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
