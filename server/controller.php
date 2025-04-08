@@ -69,7 +69,6 @@ function readMoviesByCategoryController($age) {
   $grouped = [];
   $movieCount = count($movies);
 
-
   for ($i = 0; $i < $movieCount; $i++) {
       $movie = $movies[$i];          
       $category = $movie->category;  
