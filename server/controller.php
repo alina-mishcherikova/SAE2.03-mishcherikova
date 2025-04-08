@@ -67,12 +67,12 @@ function AddProfileController(){
 function readMoviesByCategoryController($age) {
   $movies = getAllMovies($age);
   $grouped = [];
-
-  $grouped = [];
   $movieCount = count($movies);
+
+
   for ($i = 0; $i < $movieCount; $i++) {
-      $movie = $movies[$i];
-      $category = $movie->category;
+      $movie = $movies[$i];          
+      $category = $movie->category;  
 
       if (!isset($grouped[$category])) {
           $grouped[$category] = [];
@@ -80,10 +80,10 @@ function readMoviesByCategoryController($age) {
 
       $grouped[$category][] = $movie;
   }
-
   error_log(json_encode($grouped));
   return $grouped; 
 }
+
 
 function ReadProfileController(){
   $profiles = getProfiles();

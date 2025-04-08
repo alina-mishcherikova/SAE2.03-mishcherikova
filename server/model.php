@@ -47,15 +47,15 @@ function getAllMovies($age){
                 Category.name AS category
             FROM Movie
             INNER JOIN Category ON Movie.id_category = Category.id
-            WHERE Movie.min_age <= :age
+            WHERE Movie.min_age <= :userAge
             ORDER BY Category.name";
 
     $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':userAge', $age, PDO::PARAM_INT);
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
-
 
 
 function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, $url, $restriction) {
@@ -80,19 +80,20 @@ function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, 
 }
 
 function addProfile($name, $avatar, $date){
-
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
 
-    $sql = "INSERT INTO Utilisateur (name, avatar, date)
+    $sql = "INSERT INTO Utilisateur (name, avatar, age)
             VALUES (:name, :avatar, :date)";
-            
+
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':avatar', $avatar);
-    $stmt->bindParam(':age', $date);
+    $stmt->bindParam(':date', $date);
+    
     $stmt->execute();
     return $stmt->rowCount();
 }
+
 
 function MovieDetail($id) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);

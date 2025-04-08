@@ -6,7 +6,7 @@ const templateProfile = await templateFile2.text();
 
 let NavBar = {};
 
-NavBar.format = function (hAbout, profiles) {
+NavBar.format = function (hAbout, profiles, activeProfileId) {
   let html = template;
   let optionsHTML = "";
   

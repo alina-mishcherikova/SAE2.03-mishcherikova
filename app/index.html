@@ -30,14 +30,14 @@
     let activeProfileAge = 0;
 
     C.start = async function () {
-        let profiles = await DataProfile.read();
-        if (profiles.length > 0) {
-          activeProfileId = profiles[0].id;
-          activeProfileAge = profiles[0].age;
-        }
+      let profiles = await DataProfile.read();
+      if (profiles.length > 0) {
+        activeProfileId = profiles[0].id;
+        activeProfileAge = profiles[0].age;
+      }
 
-        // V.renderNavBar("C.handlerAbout()", profiles);
-        C.getMovie();
+      V.renderNavBar("C.handlerAbout()", profiles);
+      C.getMovie();
     };
 
 
@@ -46,30 +46,38 @@
         "Ceci est une base de projet pour la SAE2.03 édition 2025. Bonne chance !"
       );
     };
+
     C.getMovie = async function () {
-      let data = await DataMovie.requestMoviesByCategory(activeProfileAge);
-      V.renderMoviesByCategory(data);
-    }
+    console.log("Age of active profile:", activeProfileAge);
+    let data = await DataMovie.requestMoviesByCategory(activeProfileAge);
+    V.renderMoviesByCategory(data);
+  }
+
 
     C.handlerDetail = async function (id) {
       const film = await DataMovie.requestMovieDetails(id);
       V.renderMovieDetail(film)
     }
 
+    C.changeProfile = async function (newId) {
+      newId = parseInt(newId);
+      const profiles = await DataProfile.read();
+
+      const selected = profiles.find(p => p.id === newId);
+
+      if (selected) {
+        activeProfileId = selected.id;
+        activeProfileAge = selected.age;
+        C.getMovie();
+      }
+    };
 
     // Vue (contient tout ce qui est relatif à l'affichage)
     window.V = {};
 
-    /**
-     * V.renderNavBar
-     *
-     * Cette fonction est responsable de l'affichage de la barre de navigation (NavBar).
-     * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
-     * formaté par le composant NavBar.
-     */
     V.renderNavBar = function (hAbout, profiles) {
       let header = document.querySelector("#header");
-      header.innerHTML = NavBar.format(hAbout, profiles);
+      header.innerHTML = NavBar.format(hAbout, profiles, activeProfileId);
     };
 
     V.renderMovieCard = function (data) {
