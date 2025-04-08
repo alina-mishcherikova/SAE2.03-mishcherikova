@@ -23,6 +23,13 @@
     }
   }
 }
-.profile__options{
-  width:10rem;
+.navbar-select{
+  display: flex;
+  flex-direction: row;
+  gap:var(--gap16);
+}
+select{
+  width:8rem;
+  height: 1.5rem;
+  border: 1px solid #DBDBDB;
 }

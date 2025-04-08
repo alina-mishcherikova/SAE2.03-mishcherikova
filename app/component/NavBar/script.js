@@ -13,7 +13,6 @@ NavBar.format = function (hAbout, profiles) {
   for (let profile of profiles) {
     let option = templateProfile;
     option = option.replace("{{name}}", profile.name);
-    option = option.replace("{{id}}", profile.id);
     optionsHTML += option;
   }
 
