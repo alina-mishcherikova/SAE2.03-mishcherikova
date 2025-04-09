@@ -62,7 +62,6 @@
       const film = await DataMovie.requestMovieDetails(id);
       V.renderMovieDetail(film)
     };
-
     C.changeProfile = async function (newId) {
       const profiles = await DataProfile.read();
 
@@ -84,6 +83,11 @@
         C.getMovie();
       }
     };
+
+    C.addToFavorite = async function() {
+      
+    }
+    
 
     window.V = {};
 

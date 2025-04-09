@@ -154,3 +154,18 @@ function getProfiles(){
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
+
+function addToFavorite($id_movie, $id_profile){
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
+    $sql = "INSERT INTO Favorite (id_movie, id_profile)
+            VALUES (:id_movie, :id_profile)";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_movie', $id_movie);
+    $stmt->bindParam(':id_profile', $id_profile);
+        
+    $stmt->execute();
+    return $stmt->rowCount();
+
+}

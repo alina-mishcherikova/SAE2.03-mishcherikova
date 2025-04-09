@@ -23,8 +23,6 @@ require("model.php");
 function readMoviesController(){
   $age = isset($_REQUEST['age']) ? intval($_REQUEST['age']) : null;
   $movies = getAllMovies($age);
-
-  // групуємо фільми за категоріями так само як у readMoviesByCategoryController
   $grouped = [];
   foreach ($movies as $movie) {
     $category = $movie->category;
@@ -113,5 +111,14 @@ function UpdateProfileController(){
       return "Le profil a été modifié avec succès.";
   } else {
       return false;
+  }
+}
+
+function AddToFavoriteController(){
+  $id_movie = $_REQUEST['id_movie'];
+  $id_profile = $_REQUEST['id_profile'];
+  $ok = addToFavorite($id_movie, $id_profile);
+  if ($ok != 0){
+    ?><script>alert('Movie successfully added)'); </script><?php
   }
 }

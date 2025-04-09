@@ -18,5 +18,9 @@ DataMovie.requestMoviesByCategory = async function (age) {
   const data = await response.json();
   return data;}
 
-
+DataMovie.addToFavorite = async function() {
+  let response = await fetch(HOST_URL + '/server/script.php?todo=addToFavorite=');
+  let data = await response.json();
+  return data;
+};
 export { DataMovie };
