@@ -8,24 +8,31 @@ let NavBar = {};
 
 NavBar.format = function (hAbout, profiles, activeProfileId) {
   let html = template;
-  let optionsHTML = "";
-  
+  let activeName = "";
+  let activeAvatar= "default-avatar.jpg";
+  let optionsHTML = '<option value=""' + (!activeProfileId ? ' selected' : '') + '>-- Choisir un profil --</option>';
+
   for (let profile of profiles) {
     let option = templateProfile;
-    option = option.replace("{{name}}", profile.name);
     option = option.replace("{{id}}", profile.id);
-
-    if (profile.id == activeProfileId) {
+    option = option.replace("{{name}}", profile.name);
+  
+    if (String(profile.id) === String(activeProfileId)) {
       option = option.replace(">", " selected>");
+      activeName = profile.name;
+      activeAvatar = profile.avatar || "default-avatar.jpg";
     }
-
+  
     optionsHTML += option;
   }
+  
 
   html = html.replace("{{hAbout}}", hAbout);
   html = html.replace("{{profiles}}", optionsHTML);
+  html = html.replace("{{name}}", activeName);
+  html = html.replace("{{avatar}}", activeAvatar);
+
   return html;
 };
-
 
 export { NavBar };

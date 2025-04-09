@@ -5,8 +5,12 @@
   </ul>
   <ul class="navbar__list navbar__list--right">
     <li class="navbar__item navbar-select">
-      <select name="profile" id="profile-select" onchange="C.changeProfile(this.value)">
+      <div class="profile__block">
+      <select name="profile" id="profile-select"  onchange="C.changeProfile(this.value)">
         {{profiles}}
-      </select></li>
+      </select>
+      <img class="profile__img" src="https://mmi.unilim.fr/~mishcherikova1/SAE2.03-mishcherikova/server/avatar/{{avatar}}" alt="{{name}} Photo">
+
+    </div></li>
   </ul>
 </nav>

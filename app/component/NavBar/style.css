@@ -36,3 +36,15 @@ select{
   color:var( --color-white);
   text-decoration: none;
 }
+.profile__block{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--gap16);
+}
+.profile__img{
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  aspect-ratio:0.5;
+}

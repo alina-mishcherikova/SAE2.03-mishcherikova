@@ -30,15 +30,13 @@
     let activeProfileAge = 0;
 
     C.start = async function () {
-      let profiles = await DataProfile.read();
-      if (profiles.length > 0) {
-        activeProfileId = profiles[0].id;
-        activeProfileAge = profiles[0].age;
-      }
+  let profiles = await DataProfile.read();
+  activeProfileId = null;
+  activeProfileAge = 0;
 
-      V.renderNavBar("C.handlerAbout()", profiles);
-      C.getMovie();
-    };
+  V.renderNavBar("C.handlerAbout()", profiles);
+  C.getMovie();
+};
 
 
     C.handlerAbout = function () {
@@ -48,10 +46,10 @@
     };
 
     C.getMovie = async function () {
-    console.log("Age of active profile:", activeProfileAge);
-    let data = await DataMovie.requestMoviesByCategory(activeProfileAge);
-    V.renderMoviesByCategory(data);
-  }
+      console.log("Age of active profile:", activeProfileAge);
+      let data = await DataMovie.requestMoviesByCategory(activeProfileAge);
+      V.renderMoviesByCategory(data);
+    }
 
 
     C.handlerDetail = async function (id) {
@@ -61,6 +59,7 @@
 
     C.changeProfile = async function (newId) {
       newId = parseInt(newId);
+      localStorage.setItem("activeProfileId", newId);
       const profiles = await DataProfile.read();
 
       const selected = profiles.find(p => p.id === newId);
@@ -68,6 +67,7 @@
       if (selected) {
         activeProfileId = selected.id;
         activeProfileAge = selected.age;
+        V.renderNavBar("C.handlerAbout()", profiles);
         C.getMovie();
       }
     };
