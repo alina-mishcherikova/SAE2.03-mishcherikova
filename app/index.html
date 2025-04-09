@@ -10,7 +10,6 @@
 
 <body>
   <header id="header"></header>
-
   <section id="content"></section>
 
   <script type="module">
@@ -21,58 +20,71 @@
     import { MovieCard } from "./component/Movie/script.js";
     import { MovieCategory } from "./component/MovieCategory/script.js";
 
-    // Controleur
-    // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
-    // Une fois l'application terminée, on pourrait remettre let C.
     window.C = {};
 
-    let activeProfileId = 0;
+    let activeProfileId = null;
     let activeProfileAge = 0;
 
+    // Fonction utilitaire pour grouper les films par catégorie
+    function groupByCategory(movies) {
+      let grouped = {};
+      for (let movie of movies) {
+        if (!grouped[movie.category]) grouped[movie.category] = [];
+        grouped[movie.category].push(movie);
+      }
+      return grouped;
+    }
+
     C.start = async function () {
-  let profiles = await DataProfile.read();
-  activeProfileId = null;
-  activeProfileAge = 0;
+      let profiles = await DataProfile.read();
+      activeProfileId = null;
+      activeProfileAge = 99;
 
-  V.renderNavBar("C.handlerAbout()", profiles);
-  C.getMovie();
-};
-
+      V.renderNavBar("C.handlerAbout()", profiles);
+      C.getMovie();
+    };
 
     C.handlerAbout = function () {
-      alert(
-        "Ceci est une base de projet pour la SAE2.03 édition 2025. Bonne chance !"
-      );
+      alert("Ceci est une base de projet pour la SAE2.03 édition 2025. Bonne chance !");
     };
 
     C.getMovie = async function () {
-      console.log("Age of active profile:", activeProfileAge);
-      let data = await DataMovie.requestMoviesByCategory(activeProfileAge);
-      V.renderMoviesByCategory(data);
-    }
+  const movies = await DataMovie.requestMovies(activeProfileAge);
 
+  if (movies && typeof movies === 'object' && Object.keys(movies).length > 0) {
+    V.renderMoviesByCategory(movies);
+  } else {
+    document.querySelector("#content").innerHTML = `<p class="no-movie">Aucun film disponible pour ce profil.</p>`;
+  }
+};
 
     C.handlerDetail = async function (id) {
       const film = await DataMovie.requestMovieDetails(id);
       V.renderMovieDetail(film)
-    }
+    };
 
     C.changeProfile = async function (newId) {
-      newId = parseInt(newId);
-      localStorage.setItem("activeProfileId", newId);
       const profiles = await DataProfile.read();
 
+      if (!newId) {
+        activeProfileId = null;
+        activeProfileAge = 99;
+        V.renderNavBar("C.handlerAbout()", profiles, activeProfileId);
+        C.getMovie();
+        return;
+      }
+
+      newId = parseInt(newId);
       const selected = profiles.find(p => p.id === newId);
 
       if (selected) {
         activeProfileId = selected.id;
         activeProfileAge = selected.age;
-        V.renderNavBar("C.handlerAbout()", profiles);
+        V.renderNavBar("C.handlerAbout()", profiles, activeProfileId);
         C.getMovie();
       }
     };
 
-    // Vue (contient tout ce qui est relatif à l'affichage)
     window.V = {};
 
     V.renderNavBar = function (hAbout, profiles) {
@@ -89,10 +101,12 @@
         content.innerHTML = MovieCard.format(data);
       }
     };
+
     V.renderMovieDetail = function (film) {
       let content = document.querySelector("#content");
       content.innerHTML = MovieDetail.format(film);
     };
+
     V.renderMoviesByCategory = function (grouped) {
       let content = document.querySelector("#content");
       content.innerHTML = "";
@@ -101,9 +115,8 @@
       }
     };
 
-    C.start(); // Démarre l'application
+    C.start();
   </script>
 </body>
 
 </html>
-<script type="module"></script>

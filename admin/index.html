@@ -88,9 +88,7 @@
     V.renderLog("Veuillez sélectionner un profil à modifier.");
     return;
   }
-
   fd.append("id", selectedId);
-  console.log("Дані, що відправляються:", Object.fromEntries(fd.entries()));
 
   let res = await DataProfile.update(fd);
   V.renderLog(res);

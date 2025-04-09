@@ -20,12 +20,6 @@ ModifyProfile.autoFill = function (profile) {
   nameInput.value = profile.name;
   avatarInput.value = profile.avatar;
   dateInput.value = profile.age;
-
-  console.log("Заповнено:", {
-    name: nameInput.value,
-    avatar: avatarInput.value,
-    date: dateInput.value,
-  });
 };
 
 /**

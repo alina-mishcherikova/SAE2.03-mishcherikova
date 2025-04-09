@@ -36,9 +36,9 @@ define("DBPWD", "mishcherikova1");
 //     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
 //     return $res; // Retourne les résultats
 // }
-function getAllMovies($age){
+function getAllMovies($age = null) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
-    
+
     $sql = "SELECT 
                 Movie.id, 
                 Movie.name, 
@@ -46,16 +46,24 @@ function getAllMovies($age){
                 Movie.min_age,
                 Category.name AS category
             FROM Movie
-            INNER JOIN Category ON Movie.id_category = Category.id
-            WHERE Movie.min_age <= :userAge
-            ORDER BY Category.name";
+            INNER JOIN Category ON Movie.id_category = Category.id";
+
+    if ($age !== null && $age < 99) {
+        $sql .= " WHERE Movie.min_age <= :userAge";
+    }
+
+    $sql .= " ORDER BY Category.name";
 
     $stmt = $cnx->prepare($sql);
-    $stmt->bindParam(':userAge', $age, PDO::PARAM_INT);
-    $stmt->execute();
 
+    if ($age !== null && $age < 99) {
+        $stmt->bindParam(':userAge', $age, PDO::PARAM_INT);
+    }
+
+    $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
+
 
 
 function addMovie($name, $realisateur, $annee, $duree, $desc, $categorie, $img, $url, $restriction) {
@@ -138,7 +146,10 @@ function MovieDetail($id) {
 
 function getProfiles(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT id, name, avatar, DATE_FORMAT(age, '%Y-%m-%d') AS age FROM Utilisateur";
+
+    $sql = "SELECT id, name, avatar, YEAR(CURDATE()) - YEAR(age) AS age 
+            FROM Utilisateur";
+
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);

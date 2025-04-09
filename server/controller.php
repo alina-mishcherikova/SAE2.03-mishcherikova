@@ -21,10 +21,22 @@
 require("model.php");
 
 function readMoviesController(){
-  $profileId = $_REQUEST['profile_id'];
-  $movies = getAllMovies($profileId);
-  return $movies;
+  $age = isset($_REQUEST['age']) ? intval($_REQUEST['age']) : null;
+  $movies = getAllMovies($age);
+
+  // групуємо фільми за категоріями так само як у readMoviesByCategoryController
+  $grouped = [];
+  foreach ($movies as $movie) {
+    $category = $movie->category;
+    if (!isset($grouped[$category])) {
+        $grouped[$category] = [];
+    }
+    $grouped[$category][] = $movie;
+  }
+
+  return $grouped;
 }
+
 
 function MovieDetailController() {
   $id = $_REQUEST['id'];
