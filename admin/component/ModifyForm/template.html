@@ -1,6 +1,13 @@
 <div class="Profile">
-  <h4 class="Profile__title">Ajouter un profile</h4>
-  <form class="Profile__form">
+  <h4 class="Profile__title">Modifier un profile</h4>
+  <form class="Profile__form--edit">
+    <div class="form__field">
+    <label class="form__label" for="profils">Pour modifier un profil, sélectionnez-le dans la liste ci-dessous</label>
+    <select
+      onchange="{{handlerChange}}" name="profils">
+      {{options}}
+      </select>
+    </div>
     <div class="form__field">
       <label class="form__label" for="name">Nom l'utilisateur *</label>
       <input class="admin__input" required type="text" name="name" placeholder="Dodo" />
@@ -16,7 +23,7 @@
         placeholder="AAAA-MM-JJ" />
     </div>
 
-    <input onclick="{{handler}}" class="formbutton" type="button" value="Add" name="todo" />
+    <input onclick="{{handlerUpdate}}" class="formbutton" type="button" value="Modify" name="todo" />
 
   </form>
 </div>

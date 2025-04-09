@@ -12,7 +12,10 @@
   <section id="log"></section>
   <section class="sections">
     <section id="addFilm"></section>
-    <section id="profileForm"></section>
+    <section class="ProfileForms">
+      <section id="profileForm"></section>
+      <section id="profileModifForm"></section>
+    </section>
   </section>
 
   <script type="module">
@@ -20,7 +23,8 @@
     import { DataProfile } from "./data/dataProfile.js";
     import { Log } from "./component/Log/script.js";
     import { AddNewFilm } from "./component/AddNewFilm/script.js";
-    import { AddProfile } from "./component/ProfileForm/script.js"
+    import { AddProfile } from "./component/ProfileForm/script.js";
+    import { ModifyProfile } from "./component/ModifyForm/script.js";
 
     window.C = {};
 
@@ -72,29 +76,25 @@
 
       let res = await DataMovie.addProfile(fd);
       V.renderLog(res);
-
-
-      C.loadProfiles();
     };
 
-    C.handlerUpdateProfile = async function () {
-      let form = document.querySelector(".Profile__form");
-      let fd = new FormData(form);
+    C.handlerUpdate = async function () {
+  let form = document.querySelector(".Profile__form--edit"); 
+  let fd = new FormData(form);
 
-      if (!fd.get("profils")) {
-        V.renderLog("Veuillez sélectionner un profil à modifier.");
-        return;
-      }
-      fd.append("id", fd.get("profils"));
-      const res = await DataProfile.update(fd);
-      if (res) {
-        V.renderLog(res);
-      } else {
-        V.renderLog("Erreur lors de la modification du profil.");
-      }
+  let selectedId = form.querySelector("select[name=profils]").value;
 
-      C.loadProfiles();
-    };
+  if (!selectedId) {
+    V.renderLog("Veuillez sélectionner un profil à modifier.");
+    return;
+  }
+
+  fd.append("id", selectedId);
+  console.log("Дані, що відправляються:", Object.fromEntries(fd.entries()));
+
+  let res = await DataProfile.update(fd);
+  V.renderLog(res);
+};
 
     C.changeProfile = async function () {
       let select = document.querySelector("select[name=profils]");
@@ -111,21 +111,24 @@
       let profiles = await DataProfile.read();
       let selectedProfile = profiles.find(p => p.id == selectedId);
       if (selectedProfile) {
-        AddProfile.autoFill(selectedProfile);
+        ModifyProfile.autoFill(selectedProfile);
       }
     };
 
 
     C.loadProfiles = async function () {
       let profiles = await DataProfile.read();
-      V.renderProfile("C.changeProfile()", "C.handlerUpdateProfile()", profiles);
+      V.renderModifProfile("C.changeProfile", "C.handlerUpdate", profiles);
     };
+
 
     C.start = function () {
       V.renderLog("Démarrage de l'application");
       V.renderMovie("C.handlerAddMovie()");
+      V.renderProfile("C.handlerAddProfile()");
       C.loadProfiles();
     };
+
 
     window.V = {};
 
@@ -137,9 +140,13 @@
       let content = document.querySelector("#addFilm");
       content.innerHTML = AddNewFilm.format(handler);
     };
-    V.renderProfile = function (handlerC, handlerU, profiles = []) {
+    V.renderModifProfile = function (handlerC, handlerU, profiles = []) {
+      let content = document.querySelector("#profileModifForm");
+      content.innerHTML = ModifyProfile.format(handlerC, handlerU, profiles);
+    };
+    V.renderProfile = function (handler) {
       let content = document.querySelector("#profileForm");
-      content.innerHTML = AddProfile.format(handlerC, handlerU, profiles);
+      content.innerHTML = AddProfile.format(handler);
     };
 
     C.start();
