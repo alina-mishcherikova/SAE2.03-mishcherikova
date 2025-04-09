@@ -1,4 +1,4 @@
-.film__cards {
+.movie__cards {
   display: flex;
   align-items: flex-start;
   align-content: flex-start;
@@ -7,8 +7,10 @@
   margin: var(--gap24) var(--gap20);
 }
 
-.film__card {
+.movie__card {
+  position: relative;
   display: flex;
+  width:fit-content;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--gap16);
@@ -26,13 +28,23 @@
   max-width: 9.75rem;
 }
 
-.film__affiche {
+.movie__affiche {
   width: 9.75rem;
   height: 14.625rem;
 }
 
+.movie__favorite{
+  position:absolute;
+  top:1rem;
+  right: 1rem;
+  background-color: transparent;
+  border: none;
+}
+.movie__icon{
+  fill: var(--color-white);
+}
 @media (width > 75rem) {
-  .film__affiche {
+  .movie__affiche {
     width: 19.375rem;
     height: 29.0625rem;
   }
