@@ -214,3 +214,15 @@ function openProfilPage($userId) {
 
     return $stmt->fetch(PDO::FETCH_OBJ); 
 }
+
+function deleteFromFavorite($userId, $movieId) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
+    $sql = "DELETE FROM Favorite WHERE id_user = :user AND id_movie = :movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':user', $userId);
+    $stmt->bindParam(':movie', $movieId);
+    $stmt->execute();
+
+    return $stmt->rowCount();
+}

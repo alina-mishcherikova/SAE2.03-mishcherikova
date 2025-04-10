@@ -141,3 +141,8 @@ function readFavoritesController($id_user) {
   $moviesFav = getFavorites($id_user);
   return $moviesFav;
 }
+
+function deleteFavoriteController($id_user, $id_movie) {
+  $movieList = deleteFromFavorite($id_user, $id_movie);
+  return $movieList;
+}

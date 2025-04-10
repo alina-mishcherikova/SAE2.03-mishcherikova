@@ -100,12 +100,20 @@
       }
       const data = await DataMovie.addToFavorite(activeProfileId, id_movie);
       if (data.success) {
-        alert("🎉 Le film a été ajouté à vos favoris !");;
+        alert("🎉 Le film a été ajouté à vos favoris !");
+        // Masquer l'icône "ajouter"
+        el.querySelector('.movie__add').style.display = 'none';
+        // Afficher l'icône "supprimer"
+        el.querySelector('.movie__delete').style.display = 'block';
+        // Changer la fonction onclick pour supprimer des favoris
+        el.setAttribute('onclick', `event.stopPropagation(); C.handlerRemoveFavoris('${id_movie}', this)`);
+
       } else if (data.exists) {
         alert("⚠️ Ce film est déjà dans vos favoris.");
       } else {
         alert("❌ Une erreur est survenue.");
       }
+
     }
 
     C.handlerProfilePage = async function () {
@@ -120,6 +128,17 @@
 
       document.querySelector("#content").innerHTML = ProfilePage.format(profile, movies);
     }
+
+    C.handlerRemoveFavoris = async function (id_movie, el) {
+      const data = await DataMovie.deleteFavorite(activeProfileId, id_movie);
+      if (data.success) {
+        alert("Le film a été supprimeé à vos favoris !");;
+      } else if (data.exists) {
+      } else {
+        alert("❌ Une erreur est survenue.");
+      }
+    }
+
 
     window.V = {};
 
