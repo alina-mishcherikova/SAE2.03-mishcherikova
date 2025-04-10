@@ -9,7 +9,7 @@ let ProfilePage = {};
 ProfilePage.format = function (profile, movies) {
   let html = template;
 
-  html = html.replace("{{name}}", profile.name);
+  html = html.replaceAll("{{name}}", profile.name);
   html = html.replace("{{avatar}}", profile.avatar);
 
   if (movies.length === 0) {
