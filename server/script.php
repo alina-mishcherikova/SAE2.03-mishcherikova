@@ -75,7 +75,6 @@ if ( isset($_REQUEST['todo']) ){
       case 'readProfile':
         $data = ReadProfileController();
         break;
-        
       case 'updateProfile':
         $data = UpdateProfileController();
         break;
@@ -84,8 +83,12 @@ if ( isset($_REQUEST['todo']) ){
         $data = AddToFavoriteController();
         break;
       
+      case 'openProfile':
+        $data = openProfileController();
+        break;
+      
       case 'readFavorites':
-        $data = ReadFavoritesController();
+        $data = readFavoritesController();
         break;
       
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée

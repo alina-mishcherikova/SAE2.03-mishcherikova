@@ -19,40 +19,12 @@
     import { NavBar } from "./component/NavBar/script.js";
     import { MovieCard } from "./component/Movie/script.js";
     import { MovieCategory } from "./component/MovieCategory/script.js";
+    import { ProfilePage } from "./component/Profile/script.js";
 
     window.C = {};
 
     let activeProfileId = null;
     let activeProfileAge = 0;
-
-    document.querySelector("#content").addEventListener("click", async (e) => {
-
-      // e = event = événement 
-
-      if (!e.target.classList.contains("movie__favorite")) return;
-      e.stopPropagation();
-
-      const button = e.target;
-      const movieId = button.dataset.id;
-
-      if (!activeProfileId) {
-        alert("Veuillez d'abord choisir un profil.");
-        return;
-      }
-
-      const res = await fetch(`${HOST_URL}/server/script.php?todo=favoris&id_user=${activeProfileId}&id_movie=${movieId}`);
-      const data = await res.json();
-
-      if (data.success) {
-        alert("🎉 Le film a été ajouté à vos favoris !");
-        button.classList.add("added");
-      } else if (data.exists) {
-        alert("⚠️ Ce film est déjà dans vos favoris.");
-      } else {
-        alert("❌ Une erreur est survenue.");
-      }
-    });
-
 
     // Fonction utilitaire pour grouper les films par catégorie
     function groupByCategory(movies) {
@@ -109,28 +81,38 @@
         activeProfileId = selected.id;
         activeProfileAge = selected.age;
         V.renderNavBar("C.handlerAbout()", profiles, activeProfileId);
-        C.getMovie();
+
       }
     };
 
-    C.getFavorites = async function () {
+    C.handlerAddFavoris = async function (id_movie, el) {
+      if (!activeProfileId) {
+        alert("Veuillez d'abord choisir un profil.");
+        return;
+      }
+      const data = await DataMovie.addToFavorite(activeProfileId, id_movie);
+      if (data.success) {
+        alert("🎉 Le film a été ajouté à vos favoris !");
+        el.classList.add("added");
+      } else if (data.exists) {
+        alert("⚠️ Ce film est déjà dans vos favoris.");
+      } else {
+        alert("❌ Une erreur est survenue.");
+      }
+    }
+
+    C.handlerProfilePage = async function () {
       if (!activeProfileId) {
         alert("Veuillez d'abord choisir un profil.");
         return;
       }
 
-      const res = await fetch(`${HOST_URL}/server/script.php?todo=readFavorites&id_user=${activeProfileId}`);
-      const movies = await res.json();
+      const profile = await DataProfile.profilePage(activeProfileId); 
 
-      if (movies.length === 0) {
-        document.querySelector("#content").innerHTML = `<p class="no-movie">Aucun film en favoris.</p>`;
-      } else {
-        const grouped = groupByCategory(movies);
-        V.renderMoviesByCategory(grouped);
-      }
-    };
+      const movies = await DataMovie.getFavorites(activeProfileId); // запит на улюблені фільми цього користувача
 
-
+      document.querySelector("#content").innerHTML = ProfilePage.format(profile, movies);
+    }
 
     window.V = {};
 

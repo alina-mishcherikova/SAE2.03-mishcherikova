@@ -51,6 +51,9 @@
   align-items: center;
   cursor: pointer;
 }
+.movie__favorite.added svg path {
+  fill: var(--color-favorite);
+}
 .movie__favorite:hover {
   background-color: rgba(0, 0, 0,0.5);
   .movie__icon {
@@ -70,7 +73,7 @@
 
 }
 
-@media (width > 40rem) {
+@media (width > 45rem) {
   .movie__affiche {
     width: 19.375rem;
     height: 29.0625rem;

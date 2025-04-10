@@ -114,17 +114,30 @@ function UpdateProfileController(){
   }
 }
 
-function AddToFavoriteController(){
+function AddToFavoriteController() {
+  $id_user = $_REQUEST['id_user'];
   $id_movie = $_REQUEST['id_movie'];
-  $id_profile = $_REQUEST['id_profile'];
-  $ok = addToFavorite($id_movie, $id_profile);
-  if ($ok != 0){
-    ?><script>alert('Movie successfully added)'); </script><?php
+  $exists = checkFavorite($id_user, $id_movie);
+
+  if ($exists) {
+    return ["exists" => true];
+  }
+  $ok = addToFavorite($id_user, $id_movie);
+  if ($ok != 0) {
+    return ["success" => true];
+  } else {
+    return ["success" => false];
   }
 }
+function openProfileController(){
+  $id = $_REQUEST['id_user'];
+  $profile = getProfile($id);
+  return $profile;
+}
 
-function readFavoritesController(){
-  $userId = $_REQUEST['id_user'];
-  $movies = getFavorites($userId);
+
+function readFavoritesController() {
+  $id_user = $_REQUEST['id_user'];
+  $movies = getFavorites($id_user);
   return $movies;
 }

@@ -3,12 +3,11 @@
 :root {
   /* Primitive Tokens */
   --color-black: #0e0e0e;
-  --color-accent: hsl(222, 80%, 37%);
   --color-white: hsl(0, 0%, 100%);
   --color-gray-light: hsl(0, 0%, 80%);
   --color-gray: hsl(0, 0%, 50%);
   --color-gray-dark: hsl(0, 0%, 10%);
-  --color-favorite: hsl(53, 62%, 80%);
+  --color-favorite: hsl(335, 63%, 80%);
   --ff-sans: "Inter", sans-serif;
 
   /*Size*/
