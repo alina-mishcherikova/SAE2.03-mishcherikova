@@ -146,12 +146,13 @@ function MovieDetail($id) {
 
 function getProfiles(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT id, name, avatar, age FROM Utilisateur";
+
+    $sql = "SELECT id, name, avatar, age FROM Utilisateur";  // точно така таблиця?
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
+
     return $stmt->fetchAll(PDO::FETCH_OBJ);
-  }
-  
+}
 
 function checkFavorite($id_user, $id_movie) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
@@ -181,15 +182,15 @@ function checkFavorite($id_user, $id_movie) {
   function getFavorites($userId) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
 
-    $sql = "SELECT 
+    $sql = "SELECT
+                id_user,
+                Utilisateur.name AS user_name, 
                 Movie.id, 
                 Movie.name, 
-                Movie.image, 
-                Movie.min_age, 
-                Category.name AS category
+                Movie.image
             FROM Favorite
             INNER JOIN Movie ON Favorite.id_movie = Movie.id
-            INNER JOIN Category ON Movie.id_category = Category.id
+            INNER JOIN Utilisateur ON Favorite.id_user = Utilisateur.id
             WHERE Favorite.id_user = :user";
 
     $stmt = $cnx->prepare($sql);
@@ -197,4 +198,19 @@ function checkFavorite($id_user, $id_movie) {
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function openProfilPage($userId) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
+    $sql = "SELECT
+            name, avatar 
+            FROM Utilisateur
+            WHERE id = :user";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':user', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_OBJ); 
 }

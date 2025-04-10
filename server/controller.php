@@ -99,6 +99,7 @@ function ReadProfileController(){
   return $profiles;
 }
 
+
 function UpdateProfileController(){
   $id = $_REQUEST['id'];
   $name = $_REQUEST['name'];
@@ -129,15 +130,14 @@ function AddToFavoriteController() {
     return ["success" => false];
   }
 }
+
 function openProfileController(){
   $id = $_REQUEST['id_user'];
-  $profile = getProfile($id);
+  $profile = openProfilPage($id);
   return $profile;
 }
 
-
-function readFavoritesController() {
-  $id_user = $_REQUEST['id_user'];
-  $movies = getFavorites($id_user);
-  return $movies;
+function readFavoritesController($id_user) {
+  $moviesFav = getFavorites($id_user);
+  return $moviesFav;
 }

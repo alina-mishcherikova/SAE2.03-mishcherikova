@@ -51,46 +51,50 @@ if ( isset($_REQUEST['todo']) ){
   // en fonction de la valeur de 'todo', on appelle la fonction de contrôle appropriée
   // peut s'écrire aussi avec des if/else
   switch($todo){
+
     case 'readMovies':
       $data = readMoviesController();
       break;
 
-      case 'movieDetail':
-        $data = MovieDetailController();
-        break;
+    case 'movieDetail':
+      $data = MovieDetailController();
+      break;
 
-      case 'addMovie':
-        $data = AddMovieController();
-        break;
+    case 'addMovie':
+      $data = AddMovieController();
+      break;
 
-        case 'moviesByCategory':
-          $age = intval($_REQUEST['age']);
-          $data = readMoviesByCategoryController($age);
-          break;
+    case 'moviesByCategory':
+      $age = intval($_REQUEST['age']);
+      $data = readMoviesByCategoryController($age);
+      break;
 
-      case 'addProfile':
-        $data = AddProfileController();
-        break;
-      
-      case 'readProfile':
-        $data = ReadProfileController();
-        break;
-      case 'updateProfile':
-        $data = UpdateProfileController();
-        break;
-      
-      case 'addToFavorite':
-        $data = AddToFavoriteController();
-        break;
-      
-      case 'openProfile':
-        $data = openProfileController();
-        break;
-      
-      case 'readFavorites':
-        $data = readFavoritesController();
-        break;
-      
+    case 'addProfile':
+      $data = AddProfileController();
+      break;
+    
+    case 'updateProfile':
+      $data = UpdateProfileController();
+      break;
+    
+    case 'addToFavorite':
+      $data = AddToFavoriteController();
+      break;
+  
+    case 'readProfile':
+      $data = ReadProfileController();
+      break;
+    
+    case 'openProfile':
+      $data = openProfileController();
+      break;
+    
+    case 'readFavorites':
+      $id_user = intval($_REQUEST['id_user']);
+      $data = readFavoritesController($id_user);
+      break;
+    
+  
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée
       echo json_encode('[error] Unknown todo value');
       http_response_code(400); // 400 == "Bad request"

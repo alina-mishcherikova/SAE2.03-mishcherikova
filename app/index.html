@@ -82,6 +82,14 @@
         activeProfileAge = selected.age;
         V.renderNavBar("C.handlerAbout()", profiles, activeProfileId);
 
+        // Vérifie si on est actuellement sur la page du profil (films favoris)
+        // Si oui → on recharge les favoris du nouveau profil sélectionné
+        // Sinon → on recharge simplement la liste de tous les films
+        if (document.querySelector('.user__profile')) {
+          await C.handlerProfilePage();
+        } else {
+          await C.getMovie();
+        }
       }
     };
 
@@ -92,8 +100,7 @@
       }
       const data = await DataMovie.addToFavorite(activeProfileId, id_movie);
       if (data.success) {
-        alert("🎉 Le film a été ajouté à vos favoris !");
-        el.classList.add("added");
+        alert("🎉 Le film a été ajouté à vos favoris !");;
       } else if (data.exists) {
         alert("⚠️ Ce film est déjà dans vos favoris.");
       } else {
@@ -102,14 +109,14 @@
     }
 
     C.handlerProfilePage = async function () {
+
       if (!activeProfileId) {
         alert("Veuillez d'abord choisir un profil.");
         return;
       }
 
-      const profile = await DataProfile.profilePage(activeProfileId); 
-
-      const movies = await DataMovie.getFavorites(activeProfileId); // запит на улюблені фільми цього користувача
+      const profile = await DataProfile.profilePage(activeProfileId);
+      const movies = await DataMovie.getFavorites(activeProfileId);
 
       document.querySelector("#content").innerHTML = ProfilePage.format(profile, movies);
     }
