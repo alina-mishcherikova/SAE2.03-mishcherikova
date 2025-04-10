@@ -143,6 +143,17 @@ function readFavoritesController($id_user) {
 }
 
 function deleteFavoriteController($id_user, $id_movie) {
-  $movieList = deleteFromFavorite($id_user, $id_movie);
-  return $movieList;
+  $exists = checkFavorite($id_user, $id_movie);
+
+  if (!$exists) {
+    return ["exists" => false]; 
+  }
+
+  $ok = deleteFromFavorite($id_user, $id_movie);
+  
+  if ($ok != 0) {
+    return ["success" => true];
+  } else {
+    return ["success" => false];
+  }
 }

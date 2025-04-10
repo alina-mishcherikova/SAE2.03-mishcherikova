@@ -94,82 +94,97 @@
     };
 
     C.handlerAddFavoris = async function (id_movie, el) {
+
       if (!activeProfileId) {
         alert("Veuillez d'abord choisir un profil.");
         return;
       }
-
       const data = await DataMovie.addToFavorite(activeProfileId, id_movie);
-  
       if (data.success) {
-        alert("🎉 Le film a été ajouté à vos favoris !");
-        el.querySelector('.movie__add').classList.toggle('hide');
-        el.querySelector('.movie__delete').classList.toggle('hide');
-      } else if (data.exists) {
-      
-        await C.handlerRemoveFavoris(id_movie, el);
-
+        alert("Le film a été ajouté à vos favoris !");
       } else {
-        alert("❌ Une erreur est survenue.");
+        alert("Ce film a été ajouté à vos favoris");
       }
     };
 
-    C.handlerProfilePage = async function () {
-
-      if (!activeProfileId) {
-        alert("Veuillez d'abord choisir un profil.");
-        return;
-      }
-
-      const profile = await DataProfile.profilePage(activeProfileId);
-      const movies = await DataMovie.getFavorites(activeProfileId);
-
-      document.querySelector("#content").innerHTML = ProfilePage.format(profile, movies);
-    }
-
-
-    C.handlerRemoveFavoris = async function (id_movie, el) {
+    C.handlerRemoveFavoris = async function (id_movie) {
       const data = await DataMovie.deleteFavorite(activeProfileId, id_movie);
-      if (data.success) {
-        alert("Le film a été supprimeé à vos favoris !");;
-      } else if (data.exists) {
-      } else {
-        alert("❌ Une erreur est survenue.");
+
+      if (data.exists === false) {
+        const confirmAdd = confirm("Ce film n'est pas dans vos favoris. Voulez-vous l'ajouter ?");
+
+        if (confirmAdd) {
+          const res = await DataMovie.addToFavorite(activeProfileId, id_movie);
+
+          if (res.success) {
+            alert("Le film a été ajouté à vos favoris !");
+          } else {
+            alert("Ce film a été ajouté à vos favoris");
+          }
+        }
+
+      } else if (data.success) {
+        alert("Le film a été supprimé de vos favoris !");
+          await C.handlerProfilePage();
+          return;
+        } else {
+          alert("Une erreur est survenue.");
+        }
+
+        const button = document.querySelector(`button[data-id="${id_movie}"]`);
+        button.querySelector('.movie__add').classList.toggle('hide');
+        button.querySelector('.movie__delete').classList.toggle('hide');
+      };
+
+
+      C.handlerProfilePage = async function () {
+
+        if (!activeProfileId) {
+          alert("Veuillez d'abord choisir un profil.");
+          return;
+        }
+
+        const profile = await DataProfile.profilePage(activeProfileId);
+        const movies = await DataMovie.getFavorites(activeProfileId);
+
+        document.querySelector("#content").innerHTML = ProfilePage.format(profile, movies);
       }
-    }
 
 
-    window.V = {};
 
-    V.renderNavBar = function (hAbout, profiles) {
-      let header = document.querySelector("#header");
-      header.innerHTML = NavBar.format(hAbout, profiles, activeProfileId);
-    };
 
-    V.renderMovieCard = function (data) {
-      let content = document.querySelector("#content");
-      content.innerHTML = MovieCard.format(data);
-      if (!data || data.length === 0) {
-        content.innerHTML = `<p class="no-movie">Aucun film disponible pour le moment.</p>`;
-      } else {
+
+      window.V = {};
+
+      V.renderNavBar = function (hAbout, profiles) {
+        let header = document.querySelector("#header");
+        header.innerHTML = NavBar.format(hAbout, profiles, activeProfileId);
+      };
+
+      V.renderMovieCard = function (data) {
+        let content = document.querySelector("#content");
         content.innerHTML = MovieCard.format(data);
-      }
-    };
+        if (!data || data.length === 0) {
+          content.innerHTML = `<p class="no-movie">Aucun film disponible pour le moment.</p>`;
+        } else {
+          content.innerHTML = MovieCard.format(data);
+        }
+      };
 
-    V.renderMovieDetail = function (film) {
-      let content = document.querySelector("#content");
-      content.innerHTML = MovieDetail.format(film);
-    };
+      V.renderMovieDetail = function (film) {
+        let content = document.querySelector("#content");
+        content.innerHTML = MovieDetail.format(film);
+      };
 
-    V.renderMoviesByCategory = function (grouped) {
-      let content = document.querySelector("#content");
-      content.innerHTML = "";
-      for (let category in grouped) {
-        content.innerHTML += MovieCategory.format(category, grouped[category]);
-      }
-    };
+      V.renderMoviesByCategory = function (grouped) {
+        let content = document.querySelector("#content");
+        content.innerHTML = "";
+        for (let category in grouped) {
+          content.innerHTML += MovieCategory.format(category, grouped[category]);
+        }
+      };
 
-    C.start();
+      C.start();
   </script>
 </body>
 

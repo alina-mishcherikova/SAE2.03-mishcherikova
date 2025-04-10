@@ -37,7 +37,7 @@
   height: 14.625rem;
 }
 
-.movie__favorite {
+.movie__action {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -51,10 +51,12 @@
   align-items: center;
   cursor: pointer;
 }
-.movie__favorite.added svg path {
-  fill: var(--color-favorite);
+.movie__delete{
+  top: 1rem;
+  left: 1rem;
 }
-.movie__favorite:hover {
+
+.movie__action :hover {
   background-color: rgba(0, 0, 0,0.5);
   .movie__icon {
     fill: var(--color-favorite);
@@ -63,20 +65,16 @@
 }
 
 .icon{
-  
   width: 1.5rem;
   height: 1.5rem;
   color: var(--color-white);
 }
-.icon.hide{
-  display: none;
-}
+
 
 .movie__card:hover {
   cursor: pointer;
   transform: scale(1.05);
   transition: transform 0.2s ease-in-out;
-
 }
 
 @media (width > 45rem) {
