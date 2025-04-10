@@ -2,17 +2,19 @@
 
 :root {
   /* Primitive Tokens */
-  --color-black: hsl(253, 69%, 8%);
+  --color-black: #0e0e0e;
+  --color-accent: hsl(222, 80%, 37%);
   --color-white: hsl(0, 0%, 100%);
   --color-gray-light: hsl(0, 0%, 80%);
   --color-gray: hsl(0, 0%, 50%);
-  --color-gray-dark: hsl(0, 0%, 20%);
+  --color-gray-dark: hsl(0, 0%, 10%);
   --ff-sans: "Inter", sans-serif;
 
   /*Size*/
-  --fs-mh3:1.25rem;
+  --fs-mh3:1.125rem;
   --fs-mh2:1.5rem;
-  --fs-dh3:1.75rem;
+  --fs-dh2:2rem;
+  --fs-dh3:1.5rem;
   --fs-gs:0.875rem;
   --fs-gm:1rem;
   /*Font Weight*/
@@ -21,10 +23,11 @@
   --gap16:1rem;
   --gap20:1.25rem;
   --gap24:1.5rem;
+  --gap32:2rem;
   --gap40:2.5rem;
   --gap48:3rem;
 
   /* Sementic Tokens */
   --color-fg: var(--color-white);
-  --color-bg: var(--color-gray-dark);
+  --color-bg: var(--color-black);
 }

@@ -2,7 +2,7 @@
   <div class="movie-detail__info">
     <h2 class="movie-detail__title">{{name}}</h2>
     
-    <figure>
+    <figure class="movie-detail__poster-container">
       <img src="https://mmi.unilim.fr/~mishcherikova1/SAE2.03-mishcherikova/server/images/{{image}}" alt="Affiche du film"
       class="movie-detail__poster" />
       <figcaption class="movie-detail__description">{{desc}}</figcaption>
@@ -33,7 +33,7 @@
   </div>
   <div class="movie-detail__trailer">
     <h3 class="movie-detail__trailer-title">Trailer</h3>
-    <iframe width="560" height="315" src="{{VideoUrl}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+    <iframe src="{{VideoUrl}}" class="trailer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
                gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
       allowfullscreen>
     </iframe>

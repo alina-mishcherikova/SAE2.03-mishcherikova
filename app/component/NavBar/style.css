@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 3rem;
+  padding: 1rem;
   color: var(--color-fg);
-  background-color: var(--color-bg);
+  background-color: var(--color-gray-dark);
   
   .navbar__list{
     display: flex;

@@ -7,3 +7,14 @@
   text-align: center;
   margin-top: 40px;
 }
+.movies__category {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap24);
+  padding:var(--gap40) 0rem;
+}
+body{
+  background-color: var(--color-bg);
+}

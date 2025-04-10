@@ -21,3 +21,6 @@ figure{
   padding:0rem;
   gap:var(--gap16);
 }
+body{
+  margin:0rem;
+}
