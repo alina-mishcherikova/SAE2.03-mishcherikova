@@ -169,3 +169,20 @@ function addToFavorite($id_movie, $id_profile){
     return $stmt->rowCount();
 
 }
+
+function getFavorites($userId) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+  
+    $sql = "SELECT Movie.id, Movie.name, Movie.image,  Category.name AS category
+            FROM Favorite
+            JOIN Movie ON Favorite.id_movie = Movie.id
+            JOIN Category ON Movie.id_category = Category.id
+            WHERE Favorite.id_user = :user";
+  
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':user', $userId);
+    $stmt->execute();
+  
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  }
+  

@@ -122,3 +122,9 @@ function AddToFavoriteController(){
     ?><script>alert('Movie successfully added)'); </script><?php
   }
 }
+
+function readFavoritesController(){
+  $userId = $_REQUEST['id_user'];
+  $movies = getFavorites($userId);
+  return $movies;
+}

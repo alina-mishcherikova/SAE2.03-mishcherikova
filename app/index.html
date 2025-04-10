@@ -25,6 +25,35 @@
     let activeProfileId = null;
     let activeProfileAge = 0;
 
+    document.querySelector("#content").addEventListener("click", async (e) => {
+
+      // e = event = événement 
+
+      if (!e.target.classList.contains("movie__favorite")) return;
+      e.stopPropagation();
+
+      const button = e.target;
+      const movieId = button.dataset.id;
+
+      if (!activeProfileId) {
+        alert("Veuillez d'abord choisir un profil.");
+        return;
+      }
+
+      const res = await fetch(`${HOST_URL}/server/script.php?todo=favoris&id_user=${activeProfileId}&id_movie=${movieId}`);
+      const data = await res.json();
+
+      if (data.success) {
+        alert("🎉 Le film a été ajouté à vos favoris !");
+        button.classList.add("added");
+      } else if (data.exists) {
+        alert("⚠️ Ce film est déjà dans vos favoris.");
+      } else {
+        alert("❌ Une erreur est survenue.");
+      }
+    });
+
+
     // Fonction utilitaire pour grouper les films par catégorie
     function groupByCategory(movies) {
       let grouped = {};
@@ -49,14 +78,14 @@
     };
 
     C.getMovie = async function () {
-  const movies = await DataMovie.requestMovies(activeProfileAge);
+      const movies = await DataMovie.requestMovies(activeProfileAge);
 
-  if (movies && typeof movies === 'object' && Object.keys(movies).length > 0) {
-    V.renderMoviesByCategory(movies);
-  } else {
-    document.querySelector("#content").innerHTML = `<p class="no-movie">Aucun film disponible pour ce profil.</p>`;
-  }
-};
+      if (movies && typeof movies === 'object' && Object.keys(movies).length > 0) {
+        V.renderMoviesByCategory(movies);
+      } else {
+        document.querySelector("#content").innerHTML = `<p class="no-movie">Aucun film disponible pour ce profil.</p>`;
+      }
+    };
 
     C.handlerDetail = async function (id) {
       const film = await DataMovie.requestMovieDetails(id);
@@ -84,10 +113,24 @@
       }
     };
 
-    C.addToFavorite = async function() {
-      
-    }
-    
+    C.getFavorites = async function () {
+      if (!activeProfileId) {
+        alert("Veuillez d'abord choisir un profil.");
+        return;
+      }
+
+      const res = await fetch(`${HOST_URL}/server/script.php?todo=readFavorites&id_user=${activeProfileId}`);
+      const movies = await res.json();
+
+      if (movies.length === 0) {
+        document.querySelector("#content").innerHTML = `<p class="no-movie">Aucun film en favoris.</p>`;
+      } else {
+        const grouped = groupByCategory(movies);
+        V.renderMoviesByCategory(grouped);
+      }
+    };
+
+
 
     window.V = {};
 
