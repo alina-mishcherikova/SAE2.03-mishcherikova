@@ -62,19 +62,16 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.movie__icon {
-  fill: var(--color-white);
-  width: 1.5rem;
-  height: 1.5rem;
-}
 .icon{
+  
   width: 1.5rem;
   height: 1.5rem;
+  color: var(--color-white);
+}
+.icon.hide{
+  display: none;
 }
 
-.movie__delete{
-  display:none;
-}
 .movie__card:hover {
   cursor: pointer;
   transform: scale(1.05);

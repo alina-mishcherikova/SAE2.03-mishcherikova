@@ -147,7 +147,7 @@ function MovieDetail($id) {
 function getProfiles(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
 
-    $sql = "SELECT id, name, avatar, age FROM Utilisateur";  // точно така таблиця?
+    $sql = "SELECT id, name, avatar, age FROM Utilisateur";
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
 

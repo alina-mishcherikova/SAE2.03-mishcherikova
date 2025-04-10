@@ -17,6 +17,7 @@ MovieCard.format = function (obj) {
     card = card.replace("{{image}}", c.image);
     card = card.replace('{{onclick}}', `C.handlerDetail(${c.id})`);
     card = card.replaceAll('{{id}}', c.id);
+    // card=card.replaceAll('{{hide}}', );
     cardsHTML += card;
   }
 
