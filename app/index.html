@@ -11,6 +11,7 @@
 <body>
   <header id="header"></header>
   <section id="content"></section>
+  <section id="recommended"></section>
 
   <script type="module">
     import { MovieDetail } from "./component/MovieDetail/script.js";
@@ -20,6 +21,7 @@
     import { MovieCard } from "./component/Movie/script.js";
     import { MovieCategory } from "./component/MovieCategory/script.js";
     import { ProfilePage } from "./component/Profile/script.js";
+    import { RecommendedCard } from "./component/RecommendedCard/script.js";
 
     window.C = {};
 
@@ -42,6 +44,7 @@
       activeProfileAge = 99;
 
       V.renderNavBar("C.handlerAbout()", profiles);
+      C.handlerRecommendedMovies();
       C.getMovie();
     };
 
@@ -63,6 +66,17 @@
       const film = await DataMovie.requestMovieDetails(id);
       V.renderMovieDetail(film)
     };
+
+    C.handlerRecommendedMovies = async function () {
+      const movies = await DataMovie.requestRecommendedMovies();
+
+      if (movies.length === 0) {
+        document.querySelector("#recommended").innerHTML = `<p class="no-movie">Aucun film mis en avant pour le moment.</p>`;
+      } else {
+        V.renderRecommendedCard(movies);
+      }
+    };
+
     C.changeProfile = async function (newId) {
       const profiles = await DataProfile.read();
 
@@ -125,66 +139,80 @@
 
       } else if (data.success) {
         alert("Le film a été supprimé de vos favoris !");
-          await C.handlerProfilePage();
-          return;
-        } else {
-          alert("Une erreur est survenue.");
-        }
-
-        const button = document.querySelector(`button[data-id="${id_movie}"]`);
-        button.querySelector('.movie__add').classList.toggle('hide');
-        button.querySelector('.movie__delete').classList.toggle('hide');
-      };
-
-
-      C.handlerProfilePage = async function () {
-
-        if (!activeProfileId) {
-          alert("Veuillez d'abord choisir un profil.");
-          return;
-        }
-
-        const profile = await DataProfile.profilePage(activeProfileId);
-        const movies = await DataMovie.getFavorites(activeProfileId);
-
-        document.querySelector("#content").innerHTML = ProfilePage.format(profile, movies);
+        await C.handlerProfilePage();
+        return;
+      } else {
+        alert("Une erreur est survenue.");
       }
 
+      const button = document.querySelector(`button[data-id="${id_movie}"]`);
+      button.querySelector('.movie__add').classList.toggle('hide');
+      button.querySelector('.movie__delete').classList.toggle('hide');
+    };
+
+
+    C.handlerProfilePage = async function () {
+
+      if (!activeProfileId) {
+        alert("Veuillez d'abord choisir un profil.");
+        return;
+      }
+
+      const profile = await DataProfile.profilePage(activeProfileId);
+      const movies = await DataMovie.getFavorites(activeProfileId);
+
+      document.querySelector("#content").innerHTML = ProfilePage.format(profile, movies);
+    }
 
 
 
 
-      window.V = {};
 
-      V.renderNavBar = function (hAbout, profiles) {
-        let header = document.querySelector("#header");
-        header.innerHTML = NavBar.format(hAbout, profiles, activeProfileId);
-      };
+    window.V = {};
 
-      V.renderMovieCard = function (data) {
-        let content = document.querySelector("#content");
+
+    V.renderNavBar = function (hAbout, profiles) {
+      let header = document.querySelector("#header");
+      header.innerHTML = NavBar.format(hAbout, profiles, activeProfileId);
+
+      const select = document.getElementById('profile-select');
+      if (select) {
+        select.addEventListener('change', (event) => {
+          const selectedId = event.target.value;
+          C.changeProfile(selectedId);
+        });
+      }
+    }
+
+    V.renderMovieCard = function (data) {
+      let content = document.querySelector("#content");
+      content.innerHTML = MovieCard.format(data);
+      if (!data || data.length === 0) {
+        content.innerHTML = `<p class="no-movie">Aucun film disponible pour le moment.</p>`;
+      } else {
         content.innerHTML = MovieCard.format(data);
-        if (!data || data.length === 0) {
-          content.innerHTML = `<p class="no-movie">Aucun film disponible pour le moment.</p>`;
-        } else {
-          content.innerHTML = MovieCard.format(data);
-        }
-      };
+      }
+    };
 
-      V.renderMovieDetail = function (film) {
-        let content = document.querySelector("#content");
-        content.innerHTML = MovieDetail.format(film);
-      };
+    V.renderRecommendedCard = function (data) {
+      let content = document.querySelector("#recommended");
+      content.innerHTML = RecommendedCard.format(data);
+    };
 
-      V.renderMoviesByCategory = function (grouped) {
-        let content = document.querySelector("#content");
-        content.innerHTML = "";
-        for (let category in grouped) {
-          content.innerHTML += MovieCategory.format(category, grouped[category]);
-        }
-      };
+    V.renderMovieDetail = function (film) {
+      let content = document.querySelector("#content");
+      content.innerHTML = MovieDetail.format(film);
+    };
 
-      C.start();
+    V.renderMoviesByCategory = function (grouped) {
+      let content = document.querySelector("#content");
+      content.innerHTML = "";
+      for (let category in grouped) {
+        content.innerHTML += MovieCategory.format(category, grouped[category]);
+      }
+    };
+
+    C.start();
   </script>
 </body>
 

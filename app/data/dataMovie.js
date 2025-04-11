@@ -33,5 +33,11 @@ DataMovie.deleteFavorite = async function(id_user, id_movie) {
   let data = await response.json();
   return data;
 }
-  
+DataMovie.requestRecommendedMovies = async function() {
+let response = await fetch(HOST_URL + '/server/script.php?todo=readRecommendedMovies');
+let data = await response.json();
+return data;
+};
+
+
 export { DataMovie };

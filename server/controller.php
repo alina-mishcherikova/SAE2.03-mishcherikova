@@ -157,3 +157,9 @@ function deleteFavoriteController($id_user, $id_movie) {
     return ["success" => false];
   }
 }
+
+function readRecommendedMoviesController(){
+  $movies = getRecommendedMovies();
+  error_log(json_encode($movies));
+  return $movies;
+}

@@ -226,3 +226,18 @@ function deleteFromFavorite($userId, $movieId) {
 
     return $stmt->rowCount();
 }
+
+
+function getRecommendedMovies() {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+  
+    $sql = "SELECT id, name, image, description 
+    FROM Movie 
+    WHERE recommened = '1'";
+  
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+  
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  }
+  

@@ -1,4 +1,17 @@
-Itération 5:
-- J’ai ajouté le tableau Utilisateur avec les champs id, nom, avatar, âge. Je vais enregistrer la date de naissance.
-Itération 9:
--J'ai créé une table Favorite_Movie qui combinera les tables Movie et Utilisateur, elle stockera les clés PRIMARY KEY de chaque table.
+Itération 5 :
+- J'ai ajouté la table Utilisateur avec les champs suivants : id, nom, avatar et âge. Dans ce champ âge, je vais enregistrer la date de naissance de l'utilisateur afin de pouvoir calculer son âge par la suite.
+
+Itération 9 :
+- Au début, une association Enregistrer a été créée avec les champs id_utilisateur et id_movie. Cette association permettait de stocker les informations des films ajoutés en favoris (entre Utilisateur et Movie).
+
+Les relations étaient les suivantes :
+Un Utilisateur peut avoir entre 0 et un nombre illimité de films en favoris (cardinalité 0,n).
+Un Movie peut être dans les favoris de 0 à un nombre illimité d’utilisateurs (cardinalité 0,n).
+
+Ensuite, en appliquant les règles de transformation, cette association a été transformée en une table indépendante appelée Favorite, qui contient les clés primaires des tables Movie et Utilisateur.
+
+Itération 10 :
+- La table Movie a été modifiée. J’ai ajouté un nouveau champ recommened de type booléen. Ce champ permet d’indiquer si le film est utilisé ou non dans la section Mise en avant.
+ALTER TABLE Movie
+ADD recommened boolean;
+
