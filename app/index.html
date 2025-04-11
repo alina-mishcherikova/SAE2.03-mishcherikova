@@ -10,8 +10,8 @@
 
 <body>
   <header id="header"></header>
-  <section id="content"></section>
   <section id="recommended"></section>
+  <section id="content"></section>
 
   <script type="module">
     import { MovieDetail } from "./component/MovieDetail/script.js";
@@ -36,6 +36,20 @@
         grouped[movie.category].push(movie);
       }
       return grouped;
+    }
+
+    C.scrollLeft = function () {
+      document.querySelector('.recommended__cards').scrollBy({
+        left: -300,
+        behavior: 'smooth'
+      });
+    }
+
+    C.scrollRight = function () {
+      document.querySelector('.recommended__cards').scrollBy({
+        left: 300,
+        behavior: 'smooth'
+      });
     }
 
     C.start = async function () {
