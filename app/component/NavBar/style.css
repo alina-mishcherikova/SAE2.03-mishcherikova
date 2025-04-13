@@ -13,14 +13,13 @@
   .navbar__item {
     --_offset: 0.2rem;
     padding: 0.5rem 1rem;
-    text-decoration: underline;
+    /* text-decoration: underline;
     text-decoration-thickness: 0.1rem;
     text-underline-offset: var(--_offset);
     cursor: pointer;
     transition: text-underline-offset 0.2s ease-in-out;
     &:hover {
-      --_offset: 0.5rem;
-    }
+      --_offset: 0.5rem; }*/
   }
 }
 .navbar-select{
@@ -47,4 +46,29 @@ select{
   height: 2rem;
   border-radius: 50%;
   aspect-ratio:0.5;
+}
+.navbar__search{
+  background-color: var(--color-gray-dark);
+  color:var(--color-fg);
+  padding:0.5rem;
+  border: 1px solid var(--color-fg);
+  &:hover{
+    background-color: var(--color-fg);
+    color:var(--color-gray-dark);
+  }
+}
+#site-search{
+  background-color: var(--color-gray-dark);
+  color:var(--color-fg);
+border: 1px solid var(--color-fg)
+;
+padding: 0.5rem;}
+.searchbar__icon{
+  fill:var(--color-fg);
+}
+.searchbar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--gap4);
 }

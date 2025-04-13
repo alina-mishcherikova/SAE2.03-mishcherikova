@@ -163,3 +163,9 @@ function readRecommendedMoviesController(){
   error_log(json_encode($movies));
   return $movies;
 }
+
+function searchMoviesController() {
+  $keyword = $_REQUEST['keyword'];
+  $movies = searchMovies($keyword);
+  return $movies;
+}

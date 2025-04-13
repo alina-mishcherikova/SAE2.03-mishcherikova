@@ -39,5 +39,9 @@ let data = await response.json();
 return data;
 };
 
-
+DataMovie.searchMovies= async function(keyword){
+  let response = await fetch(HOST_URL + '/server/script.php?todo=searchMovies&keyword=' + keyword);
+  let data = await response.json();
+  return data;
+}
 export { DataMovie };

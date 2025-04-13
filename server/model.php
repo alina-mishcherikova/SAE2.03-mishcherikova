@@ -240,4 +240,19 @@ function getRecommendedMovies() {
   
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
+
+  function searchMovies($keyword) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+  
+    $sql = "SELECT id, name, image, min_age 
+            FROM Movie 
+            WHERE name LIKE :keyword
+            OR year LIKE :keyword";
+  
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindValue(':keyword', '%' . $keyword . '%', PDO::PARAM_STR);
+    $stmt->execute();
+  
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  }
   

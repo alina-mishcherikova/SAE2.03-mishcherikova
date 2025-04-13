@@ -178,6 +178,30 @@
       document.querySelector("#content").innerHTML = ProfilePage.format(profile, movies);
     }
 
+    C.handlerSearch = async function (event) {
+
+      if (event.key === "Enter") {
+        const keyword = document.getElementById('site-search').value.trim();
+
+
+        if (!keyword) {
+          const movies = await DataMovie.requestMovies(activeProfileAge);
+          V.renderMoviesByCategory(movies);
+          return;
+        }
+
+        const movies = await DataMovie.searchMovies(keyword);
+
+        if (movies.length === 0) {
+          document.querySelector("#content").innerHTML = `<p class="no-movie">Aucun film trouvé.</p>`;
+        } else {
+          V.renderMovieCard(movies);
+        }
+      }
+    }
+
+
+
 
 
 
