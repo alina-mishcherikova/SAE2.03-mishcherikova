@@ -200,6 +200,28 @@
       }
     }
 
+    C.sendRating = async function () {
+      const input = document.querySelector('input[name="score"]');
+
+      const score = input.value;
+
+      const id_movie = document.querySelector('.movie-detail').getAttribute('data-id');
+
+      const res = await DataMovie.addRating(activeProfileId, id_movie, score);
+      if (res.success) {
+        alert("Votre note a été enregistrée.");
+      } else {
+        alert("Erreur !");
+      }
+
+    }
+
+    C.summRating = async function (id_movie) {
+      id_movie = document.querySelector('.movie-detail').getAttribute('data-id');
+      const res = await DataMovie.getAverageRating(id_movie);
+      textContent = res.average;
+    };
+
 
 
     window.V = {};

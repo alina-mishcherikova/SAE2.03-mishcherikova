@@ -15,3 +15,6 @@ Itération 10 :
 ALTER TABLE Movie
 ADD recommened boolean;
 
+Itération 14 :
+- Une nouvelle table de cotation a été créée, qui contient les champs id, id_movie, id_user et rating. Tous les champs sont int.
+

@@ -123,7 +123,8 @@ function updateProfile($id, $name, $avatar, $date){
 function MovieDetail($id) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
 
-    $sql = "SELECT 
+    $sql = "SELECT
+                Movie.id,
                 Movie.name, 
                 year, 
                 length, 
@@ -281,3 +282,21 @@ function modifyRecommendedMovies($id_movie, $recommended) {
 
     return $stmt->rowCount();
 }
+
+  function addRating($id_user, $id_movie, $score) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Rating (id_user, id_movie, score) VALUES (:id_user, :id_movie, :score)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute([':id_user' => $id_user, ':id_movie' => $id_movie, ':score' => $score]);
+    return $stmt->rowCount();
+  }
+  
+  function getAverageRating($id_movie) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT ROUND(AVG(score),1) as score FROM Rating WHERE id_movie = :id_movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute([':id_movie' => $id_movie]);
+    return $stmt->fetch(PDO::FETCH_OBJ);
+
+  }
+  

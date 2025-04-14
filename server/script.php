@@ -120,6 +120,18 @@ if ( isset($_REQUEST['todo']) ){
     $data = modifyRecController($id_movie, $recommended);
     break;
 
+  case 'addRating':
+    $id_user = intval($_REQUEST['id_user']);
+    $id_movie = intval($_REQUEST['id_movie']);
+    $score = intval($_REQUEST['score']);
+    $data = addRatingController($id_user, $id_movie, $score);
+    break;
+  
+  case 'getAverageRating':
+    $id_movie = intval($_REQUEST['id_movie']);
+    $data = getAverageRatingController($id_movie);
+    break;
+  
 
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée
       echo json_encode('[error] Unknown todo value');

@@ -80,6 +80,10 @@
   flex-direction: row;
 }
 
+.rating__title,.movie__rating{
+  color:var(--color-fg);
+}
+
 @media (width > 40rem) {
   .movie-detail__poster {
     width: 20.9167rem;

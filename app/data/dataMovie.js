@@ -44,4 +44,18 @@ DataMovie.searchMovies= async function(keyword){
   let data = await response.json();
   return data;
 }
+
+DataMovie.addRating = async function (id_user, id_movie, score){
+  let response = await fetch(`${HOST_URL}/server/script.php?todo=addRating&id_user=${id_user}&id_movie=${id_movie}&score=${score}`);
+  let data = await response.json();
+  return data;
+}
+
+DataMovie.getAverageRating = async function (id_movie){
+  let response = await fetch(HOST_URL+'/server/script.php?todo=getAverageRating&id_movie='+ id_movie);
+  let data = await response.json();
+  return data;
+}
+
+
 export { DataMovie };

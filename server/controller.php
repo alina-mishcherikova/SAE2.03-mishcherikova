@@ -184,3 +184,18 @@ function modifyRecController($id_movie, $recommended) {
       return ["success" => false];
   }
 }
+
+function addRatingController($id_user, $id_movie, $score) {
+  $note = addRating($id_user, $id_movie, $score);
+  if ($note != 0) {
+    return ["success" => true];
+    } else {
+        return ["success" => false];
+    }
+
+}
+
+function getAverageRatingController($id_movie) {
+  $note = getAverageRating($id_movie);
+  return $note;
+}
