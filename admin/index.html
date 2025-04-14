@@ -17,6 +17,7 @@
       <section id="profileModifForm"></section>
     </section>
   </section>
+  <section id="recFilms"></section>
 
   <script type="module">
     import { DataMovie } from "./data/dataMovie.js";
@@ -25,6 +26,8 @@
     import { AddNewFilm } from "./component/AddNewFilm/script.js";
     import { AddProfile } from "./component/ProfileForm/script.js";
     import { ModifyProfile } from "./component/ModifyForm/script.js";
+    import { Recommendation } from "./component/RecommendMovie/script.js";
+
 
     window.C = {};
 
@@ -79,20 +82,20 @@
     };
 
     C.handlerUpdate = async function () {
-  let form = document.querySelector(".Profile__form--edit"); 
-  let fd = new FormData(form);
+      let form = document.querySelector(".Profile__form--edit");
+      let fd = new FormData(form);
 
-  let selectedId = form.querySelector("select[name=profils]").value;
+      let selectedId = form.querySelector("select[name=profils]").value;
 
-  if (!selectedId) {
-    V.renderLog("Veuillez sélectionner un profil à modifier.");
-    return;
-  }
-  fd.append("id", selectedId);
+      if (!selectedId) {
+        V.renderLog("Veuillez sélectionner un profil à modifier.");
+        return;
+      }
+      fd.append("id", selectedId);
 
-  let res = await DataProfile.update(fd);
-  V.renderLog(res);
-};
+      let res = await DataProfile.update(fd);
+      V.renderLog(res);
+    };
 
     C.changeProfile = async function () {
       let select = document.querySelector("select[name=profils]");
@@ -120,10 +123,51 @@
     };
 
 
+    C.MovieRecCheckbox = async function () {
+      let checkboxes = document.querySelectorAll('input[name="recommended"]');
+
+      for (let checkbox of checkboxes) {
+        let id = checkbox.getAttribute('data-id');
+        let recommended;
+
+        if (checkbox.checked) {
+          recommended = 1;
+        } else {
+          recommended = 0;
+        }
+
+        await DataMovie.modifyRec(id, recommended);
+      }
+
+      V.renderLog("Le statut des films a été mis à jour avec succès !");
+    }
+
+
+    C.handlerSearch = async function (event) {
+      if (event.key === "Enter") {
+        const keyword = document.getElementById('site-search').value;
+
+        if (!keyword || keyword.replaceAll(" ", "") === "") {
+          const movies = await DataMovie.requestMoviesApp();
+          V.renderMovieCard(movies);
+          return;
+        }
+
+        const movies = await DataMovie.searchMoviesApp(keyword);
+
+        if (movies.length === 0) {
+          document.querySelector("#recFilms").innerHTML = `<p class="no-movie">Aucun film trouvé.</p>`;
+        } else {
+          V.renderMovieCard(movies);
+        }
+      }
+    }
+
     C.start = function () {
       V.renderLog("Démarrage de l'application");
       V.renderMovie("C.handlerAddMovie()");
       V.renderProfile("C.handlerAddProfile()");
+      V.renderRecForm("C.handlerSearchAdmin()");
       C.loadProfiles();
     };
 
@@ -134,18 +178,31 @@
       let content = document.querySelector("#log");
       content.innerHTML = Log.format(txt);
     };
+
+    V.renderRecForm = function (handler) {
+      let content = document.querySelector("#recFilms");
+      content.innerHTML = Recommendation.format(handler);
+    };
+
     V.renderMovie = function (handler) {
       let content = document.querySelector("#addFilm");
       content.innerHTML = AddNewFilm.format(handler);
     };
+
     V.renderModifProfile = function (handlerC, handlerU, profiles = []) {
       let content = document.querySelector("#profileModifForm");
       content.innerHTML = ModifyProfile.format(handlerC, handlerU, profiles);
     };
+
     V.renderProfile = function (handler) {
       let content = document.querySelector("#profileForm");
       content.innerHTML = AddProfile.format(handler);
     };
+    V.renderMovieCard = function (data) {
+      let content = document.querySelector("#recFilms");
+      content.innerHTML = Recommendation.format(data);
+    };
+
 
     C.start();
   </script>

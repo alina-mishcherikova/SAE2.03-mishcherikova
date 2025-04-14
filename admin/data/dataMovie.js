@@ -1,4 +1,4 @@
-let HOST_URL = "https://mmi.unilim.fr/~mishcherikova1/SAE2.03-mishcherikova/";
+let HOST_URL = "..";
 
 let DataMovie = {};
 
@@ -36,5 +36,22 @@ DataMovie.addProfile = async function (fdata) {
     return data;
 };
 
+DataMovie.searchMoviesApp =async function (keyword){
+  let response = await fetch(HOST_URL + '/server/script.php?todo=searchMoviesApp&keyword=' + keyword);
+  let data = await response.json();
+  return data;
+}
 
+DataMovie.modifyRec = async function (id, recommended) {
+    let config = {
+      method: "POST"
+    };
+
+    let answer = await fetch(HOST_URL + '/server/script.php?todo=modifyRec&id=' + id + '&recommended=' + recommended, config);
+  
+    let data = await answer.json();
+  
+    return data;
+  }
+  
 export { DataMovie };

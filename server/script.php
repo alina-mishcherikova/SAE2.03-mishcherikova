@@ -109,7 +109,18 @@ if ( isset($_REQUEST['todo']) ){
     $data = searchMoviesController($search);
     break;
     
-    
+  case 'searchMoviesApp':
+    $search = $_REQUEST['search'];
+    $data = searchMoviesAppController($search);
+    break;
+
+  case 'modifyRec':
+    $id_movie = intval($_REQUEST['id']);
+    $recommended = intval($_REQUEST['recommended']);
+    $data = modifyRecController($id_movie, $recommended);
+    break;
+
+
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée
       echo json_encode('[error] Unknown todo value');
       http_response_code(400); // 400 == "Bad request"

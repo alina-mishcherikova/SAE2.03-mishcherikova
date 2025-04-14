@@ -256,3 +256,28 @@ function getRecommendedMovies() {
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
   
+  function searchMoviesApp($keyword) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
+    $sql = "SELECT id, name, image, min_age, recommened
+            FROM Movie 
+            WHERE name LIKE :keyword OR year LIKE :keyword";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindValue(':keyword', '%' . $keyword . '%', PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+function modifyRecommendedMovies($id_movie, $recommended) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    
+    $sql = "UPDATE Movie SET recommened = :recommended WHERE id = :id";
+    
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':recommended', $recommended, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $id_movie, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->rowCount();
+}

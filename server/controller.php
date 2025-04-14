@@ -169,3 +169,18 @@ function searchMoviesController() {
   $movies = searchMovies($keyword);
   return $movies;
 }
+
+function searchMoviesAppController() {
+  $keyword = $_REQUEST['keyword'];
+  $movies = searchMoviesApp($keyword);
+  return $movies;
+}
+function modifyRecController($id_movie, $recommended) {
+  $ok = modifyRecommendedMovies($id_movie, $recommended);
+
+  if ($ok != 0) {
+      return ["success" => true];
+  } else {
+      return ["success" => false];
+  }
+}
