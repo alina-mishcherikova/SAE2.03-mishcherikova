@@ -20,9 +20,8 @@
  */
 require("model.php");
 
-function readMoviesController(){
-  $age = isset($_REQUEST['age']) ? intval($_REQUEST['age']) : null;
-  $movies = getAllMovies($age);
+function readMoviesController($user_id){
+  $movies = getAllMovies($user_id);
   $grouped = [];
   foreach ($movies as $movie) {
     $category = $movie->category;
@@ -74,24 +73,24 @@ function AddProfileController(){
     }
 }
 
-function readMoviesByCategoryController($age) {
-  $movies = getAllMovies($age);
-  $grouped = [];
-  $movieCount = count($movies);
+// function readMoviesByCategoryController($age) {
+//   $movies = getAllMoviesByAge($age);
+//   $grouped = [];
+//   $movieCount = count($movies);
 
-  for ($i = 0; $i < $movieCount; $i++) {
-      $movie = $movies[$i];          
-      $category = $movie->category;  
+//   for ($i = 0; $i < $movieCount; $i++) {
+//       $movie = $movies[$i];          
+//       $category = $movie->category;  
 
-      if (!isset($grouped[$category])) {
-          $grouped[$category] = [];
-      }
+//       if (!isset($grouped[$category])) {
+//           $grouped[$category] = [];
+//       }
 
-      $grouped[$category][] = $movie;
-  }
-  error_log(json_encode($grouped));
-  return $grouped; 
-}
+//       $grouped[$category][] = $movie;
+//   }
+//   error_log(json_encode($grouped));
+//   return $grouped; 
+// }
 
 
 function ReadProfileController(){
@@ -186,16 +185,21 @@ function modifyRecController($id_movie, $recommended) {
 }
 
 function addRatingController($id_user, $id_movie, $score) {
+  if (checkIfRatingExists($id_user, $id_movie)) {
+    return ["exists" => true];
+  }
+
   $note = addRating($id_user, $id_movie, $score);
+
   if ($note != 0) {
     return ["success" => true];
-    } else {
-        return ["success" => false];
-    }
-
+  } else {
+    return ["success" => false];
+  }
 }
 
 function getAverageRatingController($id_movie) {
-  $note = getAverageRating($id_movie);
-  return $note;
+  $movie_id = $_REQUEST['movie_id'];
+  $score = getAverageRating($id_movie);
+  return $score;
 }

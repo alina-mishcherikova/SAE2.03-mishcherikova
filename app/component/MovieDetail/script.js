@@ -6,7 +6,7 @@ let MovieDetail = {};
 MovieDetail.format = function (film) {
   let html = template;
 
-  html = html.replace("{{id}}", film.id);
+  html = html.replaceAll("{{id}}", film.id);
   html = html.replace("{{name}}", film.name);
   html = html.replace("{{image}}", film.image);
   html = html.replace("{{desc}}", film.description);
@@ -15,7 +15,8 @@ MovieDetail.format = function (film) {
   html = html.replace("{{category}}", film.category);
   html = html.replace("{{min_age}}", film.min_age + "+");
   html = html.replace("{{VideoUrl}}", film.trailer);
-  html = html.replace("{{note}}", film.score);
+  console.log(film.score);
+  html = html.replace("{{score}}", film.score);
   html = html.replace("{{onclick}}", `C.sendRating(${film.id})`);
   return html;
 };

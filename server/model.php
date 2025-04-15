@@ -36,32 +36,34 @@ define("DBPWD", "mishcherikova1");
 //     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
 //     return $res; // Retourne les résultats
 // }
-function getAllMovies($age = null) {
-    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+function getAllMovies($id_user) {
+  $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
 
-    $sql = "SELECT 
-                Movie.id, 
-                Movie.name, 
-                Movie.image, 
-                Movie.min_age,
-                Category.name AS category
-            FROM Movie
-            INNER JOIN Category ON Movie.id_category = Category.id";
+  $sql = "SELECT (YEAR(CURDATE()) - YEAR(age)) AS user_age FROM Utilisateur WHERE id = :id_user";
+  $stmt = $cnx->prepare($sql);
+  $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+  $stmt->execute();
 
-    if ($age !== null && $age < 99) {
-        $sql .= " WHERE Movie.min_age <= :userAge";
-    }
+  $result = $stmt->fetch(PDO::FETCH_OBJ);
 
-    $sql .= " ORDER BY Category.name";
+  $user_age = $result ? $result->user_age : 99;
 
-    $stmt = $cnx->prepare($sql);
+  $sql = "SELECT 
+              Movie.id, 
+              Movie.name, 
+              Movie.image, 
+              Movie.min_age,
+              Category.name AS category
+          FROM Movie
+          INNER JOIN Category ON Movie.id_category = Category.id
+          WHERE Movie.min_age <= :user_age
+          ORDER BY Category.name";
 
-    if ($age !== null && $age < 99) {
-        $stmt->bindParam(':userAge', $age, PDO::PARAM_INT);
-    }
+  $stmt = $cnx->prepare($sql);
+  $stmt->bindParam(':user_age', $user_age, PDO::PARAM_INT);
+  $stmt->execute();
 
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
 
 
@@ -290,13 +292,26 @@ function modifyRecommendedMovies($id_movie, $recommended) {
     $stmt->execute([':id_user' => $id_user, ':id_movie' => $id_movie, ':score' => $score]);
     return $stmt->rowCount();
   }
+  function checkIfRatingExists($id_user, $id_movie) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT * FROM Rating WHERE id_user = :id_user AND id_movie = :id_movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute([':id_user' => $id_user, ':id_movie' => $id_movie]);
+    return $stmt->fetch() != false;
+  }
   
   function getAverageRating($id_movie) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT ROUND(AVG(score),1) as score FROM Rating WHERE id_movie = :id_movie";
+    $sql = "SELECT ROUND(AVG(score),1) AS score FROM Rating WHERE id_movie = :id_movie";
     $stmt = $cnx->prepare($sql);
     $stmt->execute([':id_movie' => $id_movie]);
-    return $stmt->fetch(PDO::FETCH_OBJ);
-
+  
+    $result = $stmt->fetch(PDO::FETCH_OBJ);
+  
+    if ($result && $result->score != null) {
+      return $result->score;
+    } else {
+      return null; 
+    }
   }
   

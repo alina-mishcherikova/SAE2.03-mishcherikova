@@ -67,7 +67,7 @@
     };
 
     C.getMovie = async function () {
-      const movies = await DataMovie.requestMovies(activeProfileAge);
+      const movies = await DataMovie.requestMoviesByCategory(activeProfileId);
 
       if (movies && typeof movies === 'object' && Object.keys(movies).length > 0) {
         V.renderMoviesByCategory(movies);
@@ -77,8 +77,11 @@
     };
 
     C.handlerDetail = async function (id) {
+      document.querySelector("#recommended").innerHTML = "";
       const film = await DataMovie.requestMovieDetails(id);
       V.renderMovieDetail(film)
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const rating = C.summRating(id);
     };
 
     C.handlerRecommendedMovies = async function () {
@@ -202,13 +205,17 @@
 
     C.sendRating = async function () {
       const input = document.querySelector('input[name="score"]');
-
       const score = input.value;
-
       const id_movie = document.querySelector('.movie-detail').getAttribute('data-id');
-
+      if (score > 10 || score < 1) {
+        alert("La note doit être comprise entre 0 et 10.");
+        return;
+      }
       const res = await DataMovie.addRating(activeProfileId, id_movie, score);
-      if (res.success) {
+      C.summRating(id_movie);
+      if (res.exists) {
+        alert("Vous avez déjà noté ce film !");
+      } else if (res.success) {
         alert("Votre note a été enregistrée.");
       } else {
         alert("Erreur !");
@@ -217,11 +224,14 @@
     }
 
     C.summRating = async function (id_movie) {
-      id_movie = document.querySelector('.movie-detail').getAttribute('data-id');
       const res = await DataMovie.getAverageRating(id_movie);
-      textContent = res.average;
-    };
 
+      if (res == null) {
+        document.querySelector('.average').textContent = "Pas encore noté";
+      } else {
+        document.querySelector('.average').textContent = res;
+      }
+    };
 
 
     window.V = {};
