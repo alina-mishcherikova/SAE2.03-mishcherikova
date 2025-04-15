@@ -17,7 +17,7 @@ MovieDetail.format = function (film) {
   html = html.replace("{{VideoUrl}}", film.trailer);
   console.log(film.score);
   html = html.replace("{{score}}", film.score);
-  html = html.replace("{{onclick}}", `C.sendRating(${film.id})`);
+  html = html.replace("{{onclick}}", `C.sendRating()`);
   return html;
 };
 

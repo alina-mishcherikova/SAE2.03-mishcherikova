@@ -51,11 +51,24 @@ DataMovie.addRating = async function (id_user, id_movie, score){
   return data;
 }
 
-DataMovie.getAverageRating = async function (id_movie){
-  let response = await fetch(HOST_URL+'/server/script.php?todo=getAverageRating&id_movie='+ id_movie);
+DataMovie.getAverageRating = async function (id_movie) { 
+  let response = await fetch(HOST_URL + '/server/script.php?todo=getAverageRating&id_movie=' + id_movie);
+  let data = await response.json();
+  return data.score;
+}
+
+
+DataMovie.getComments = async function (id_movie){
+  let response = await fetch(HOST_URL + '/server/script.php?todo=getComments&id_movie=' + id_movie);
   let data = await response.json();
   return data;
 }
+
+DataMovie.sendComment = async function (id_user, id_movie, content, created_at) {
+  let response = await fetch(`${HOST_URL}/server/script.php?todo=addComment&id_user=${id_user}&id_movie=${id_movie}&content=${encodeURIComponent(content)}&created_at=${created_at}`);
+  let data = await response.json();
+  return data;
+};
 
 
 export { DataMovie };

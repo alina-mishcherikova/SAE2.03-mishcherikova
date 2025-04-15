@@ -302,16 +302,40 @@ function modifyRecommendedMovies($id_movie, $recommended) {
   
   function getAverageRating($id_movie) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT ROUND(AVG(score),1) AS score FROM Rating WHERE id_movie = :id_movie";
+    $sql = "SELECT AVG(score) AS score FROM Rating WHERE id_movie = :id_movie";
     $stmt = $cnx->prepare($sql);
-    $stmt->execute([':id_movie' => $id_movie]);
-  
-    $result = $stmt->fetch(PDO::FETCH_OBJ);
-  
-    if ($result && $result->score != null) {
-      return $result->score;
-    } else {
-      return null; 
-    }
-  }
-  
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->execute();
+    $score = $stmt->fetch(PDO::FETCH_OBJ)->score ?? 0;
+    return round($score, 1);
+}
+
+function getComments($id_movie) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    
+    $sql = "SELECT Comment.content, Comment.created_at, Utilisateur.name
+            FROM Comment
+            INNER JOIN Utilisateur ON Comment.id_user = Utilisateur.id
+            WHERE Comment.id_movie = :id_movie
+            ORDER BY Comment.created_at DESC";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function addComment($id_user, $id_movie, $content) {
+  $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+  $sql = "INSERT INTO Comment (id_user, id_movie, content, created_at) 
+          VALUES (:id_user, :id_movie, :content, NOW())"; 
+  $stmt = $cnx->prepare($sql);
+  $stmt->execute([
+      ':id_user' => $id_user,
+      ':id_movie' => $id_movie,
+      ':content' => $content
+  ]);
+
+  return $stmt->rowCount() > 0;
+}

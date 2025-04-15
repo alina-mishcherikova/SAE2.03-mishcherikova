@@ -18,3 +18,5 @@ ADD recommened boolean;
 Itération 14 :
 - Une nouvelle table de cotation a été créée, qui contient les champs id, id_movie, id_user et rating. Tous les champs sont int.
 
+Itération 15 :
+- Une nouvelle table Commentaire a été créée pour relier le film et l'utilisateur. Elle comporte les champs suivants : id, id_user,id_film - Int, comment - text, created_at DATETIME;

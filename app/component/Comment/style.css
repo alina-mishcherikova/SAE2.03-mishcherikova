@@ -1,0 +1,43 @@
+.comment__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.com {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap16);
+}
+
+.comments,
+.comment__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap24);
+}
+
+.comment__content {
+  width: 30rem;
+}
+
+.comment__title {
+  text-align: center;
+}
+
+.user__nickname,
+.comment__date,
+.comment__users,
+.section__title,
+.comment__title {
+  color: var(--color-fg);
+}
+
+.comment__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap40);
+  padding: var(--gap16) var(--gap16);
+  align-items: center;
+
+}

@@ -12,6 +12,7 @@
   <header id="header"></header>
   <section id="recommended"></section>
   <section id="content"></section>
+  <section id="commentaire"></section>
 
   <script type="module">
     import { MovieDetail } from "./component/MovieDetail/script.js";
@@ -22,6 +23,7 @@
     import { MovieCategory } from "./component/MovieCategory/script.js";
     import { ProfilePage } from "./component/Profile/script.js";
     import { RecommendedCard } from "./component/RecommendedCard/script.js";
+    import { Comment } from "./component/Comment/script.js";
 
     window.C = {};
 
@@ -78,10 +80,15 @@
 
     C.handlerDetail = async function (id) {
       document.querySelector("#recommended").innerHTML = "";
+
       const film = await DataMovie.requestMovieDetails(id);
-      V.renderMovieDetail(film)
+      V.renderMovieDetail(film);
+
+      const comments = await DataMovie.getComments(id);
+      V.renderCommentSection(comments);
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      const rating = C.summRating(id);
+      C.summRating(id);
     };
 
     C.handlerRecommendedMovies = async function () {
@@ -212,6 +219,7 @@
         return;
       }
       const res = await DataMovie.addRating(activeProfileId, id_movie, score);
+
       C.summRating(id_movie);
       if (res.exists) {
         alert("Vous avez déjà noté ce film !");
@@ -222,14 +230,41 @@
       }
 
     }
-
     C.summRating = async function (id_movie) {
-      const res = await DataMovie.getAverageRating(id_movie);
+  const res = await DataMovie.getAverageRating(id_movie);
 
-      if (res == null) {
-        document.querySelector('.average').textContent = "Pas encore noté";
+  const span = document.querySelector('.average');
+  console.log("Average rating response:", res);
+
+  if (!res || res == 0) {
+    span.textContent = "Pas encore noté";
+  } else {
+    span.textContent = res;
+  }
+}
+
+
+    C.handlerSendComment = async function () {
+      const id_movie = document.querySelector('.movie-detail').getAttribute('data-id');
+      const content = document.querySelector('.comment__content').value;
+
+      if (!activeProfileId) {
+        alert("Veuillez d'abord choisir un profil.");
+        return;
+      }
+      if (content === "") {
+        alert("Veuillez entrer un commentaire.");
+        return;
+      }
+
+      const res = await DataMovie.sendComment(activeProfileId, id_movie, content);
+
+      if (res.success) {
+        alert("Commentaire ajouté !");
+        document.querySelector('.comment__content').value = "";
+        C.handlerDetail(id_movie);
       } else {
-        document.querySelector('.average').textContent = res;
+        alert("Erreur lors de l'enregistrement du commentaire.");
       }
     };
 
@@ -276,6 +311,10 @@
       for (let category in grouped) {
         content.innerHTML += MovieCategory.format(category, grouped[category]);
       }
+    };
+    V.renderCommentSection = function (data) {
+      let content = document.querySelector("#commentaire");
+      content.innerHTML = Comment.format(data);
     };
 
     C.start();

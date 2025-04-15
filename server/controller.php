@@ -199,7 +199,15 @@ function addRatingController($id_user, $id_movie, $score) {
 }
 
 function getAverageRatingController($id_movie) {
-  $movie_id = $_REQUEST['movie_id'];
   $score = getAverageRating($id_movie);
-  return $score;
+  return ["score" => $score];  
+}
+
+function getCommentsController($id_movie) {
+  return getComments($id_movie);
+}
+
+function addCommentController($id_user, $id_movie, $content, $created_at) {
+  $result = addComment($id_user, $id_movie, $content, $created_at);
+  return ['success' => $result > 0];
 }
