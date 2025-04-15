@@ -1,97 +1,43 @@
-.movie__cards {
-  display: flex;
-  align-items: flex-start;
-  align-content: flex-start;
-  gap: var(--gap24);
-  flex-wrap: wrap;
-}
-
-.movie__card {
-  position: relative;
-  display: flex;
-  width: fit-content;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--gap16);
-}
-
-.categories {
-  font-size: var(--fs-mh2);
-  color: var(--color-fg);
-}
-
-.card__title {
-  color: var(--color-fg);
-
-  /* Mobile/H3 */
-  font-family: var(--ff-sans);
-  font-size: var(--fs-mh3);
-  font-weight: var(--fw-600);
-  line-height: 140%;
-  margin: 0rem;
-  max-width: 9.75rem;
-}
-
-.movie__affiche {
-  width: 9.75rem;
-  height: 14.625rem;
-}
-
 .movie__action {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background-color: rgba(0, 0, 0,0.2);
-  border: none;
+  background-color: var(--color-bg-secondary);
+  border: 2px solid var(--color-fg);
+  color: var(--color-fg);
   width: 2rem;
   height: 2rem;
-  border-radius: 50%;
-  display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
-.movie__delete{
-  top: 1rem;
+.movie__card{
+  width: 100%;
+}
+.movie__delete {
   left: 1rem;
 }
-
-.movie__action :hover {
-  background-color: rgba(0, 0, 0,0.5);
-  .movie__icon {
-    fill: var(--color-favorite);
-  }
-  transition: background-color 0.2s ease-in-out;
+.movie__affiche{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-
-.icon{
+.movie__action:hover {
+  background-color: var(--color-accent);
+  color: var(--color-fg);
+}
+.icon {
   width: 1.5rem;
   height: 1.5rem;
-  color: var(--color-white);
+  fill: currentColor;
 }
 
 
-.movie__card:hover {
-  cursor: pointer;
-  transform: scale(1.05);
-  transition: transform 0.2s ease-in-out;
+.card__title {
+  max-width: 9.75rem;
 }
 
-@media (width > 45rem) {
-  .movie__affiche {
-    width: 19.375rem;
-    height: 29.0625rem;
-  }
+@media (width > 768px) {
 
-  .card__title {
-    color: var(--color-fg);
-    /* Desktop/H3 */
-    font-size: var(--fs-dh3);
-    line-height: 140%;
-    max-width: 19rem;
-  }
-
-  .categories {
-    font-size: var(--fs-dh2);
-  }
 }

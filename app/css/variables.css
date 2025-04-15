@@ -4,6 +4,7 @@
   /* Primitive Tokens */
   --color-black: #0e0e0e;
   --color-white: hsl(0, 0%, 100%);
+  --color-accent:rgb(21, 54, 120);
   --color-gray-light: hsl(0, 0%, 80%);
   --color-gray: hsl(0, 0%, 50%);
   --color-gray-dark: hsl(0, 0%, 10%);

@@ -1,9 +1,15 @@
 <section class="comment__section">
-    <h2 class="section__title">Commentaires</h2>
-    <div class="comments">{{coms}}</div>
-    <div class="comment__form">
-        <h3 class="comment__title"> Vous pouvez laisser un commentaire</h3>
-        <input type="text" class="comment__content" placeholder="Laissez un commentaire" />
+    <h2 class="section__title u-center">Commentaires</h2>
+
+    <div class="comments u-flex u-flex-col">
+        {{coms}}
+    </div>
+
+    <div class="comment__form u-flex u-flex-col">
+        <h3 class="comment__title u-center">Vous pouvez laisser un commentaire</h3>
+        <textarea class="comment__content">
+            Laissez un commentaire
+        </textarea>
         <input type="button" class="comment__send" value="Envoyer" onclick="C.handlerSendComment()" />
     </div>
 </section>

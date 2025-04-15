@@ -7,14 +7,27 @@
   text-align: center;
   margin-top: 40px;
 }
-.movies__category {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap24);
-  padding:var(--gap40) 0rem;
-}
 body{
   background-color: var(--color-bg);
 }
+
+
+/* gap */
+.u-mb-16 { margin-bottom: var(--gap16); }
+.u-mb-24 { margin-bottom: var(--gap24); }
+.u-mb-40 { margin-bottom: var(--gap40); }
+
+/* text */
+.u-center { text-align: center; }
+
+/* flex */
+.u-flex { display: flex; }
+.u-flex-col { flex-direction: column; }
+.u-flex-row { flex-direction: row; }
+
+.u-gap-16 { gap: var(--gap16); }
+.u-gap-24 { gap: var(--gap24); }
+.u-gap-40 { gap: var(--gap40); }
+
+/*width*/
+.u-w-100 { width: 100%; }

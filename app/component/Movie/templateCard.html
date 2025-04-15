@@ -3,7 +3,7 @@
         class="movie__affiche" onclick="{{onclick}}" />
 
     <h3 class="card__title">{{name}}</h3>
-    <button class="movie__action movie__favorite" data-id="{{id}}"
+    <button class="movie__action u-flex  movie__favorite" data-id="{{id}}"
         onclick=" C.handlerAddFavoris('{{id}}')">
         <svg class="icon movie__add" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path
@@ -11,7 +11,7 @@
                 fill="currentColor" />
         </svg>
     </button>
-        <button class="movie__action movie__delete" data-id="{{id}}"
+        <button class="movie__action u-flex movie__delete" data-id="{{id}}"
         onclick ="C.handlerRemoveFavoris('{{id}}')">
             <svg class="icon movie__delete" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path  d=" M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772

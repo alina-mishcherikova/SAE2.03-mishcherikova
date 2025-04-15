@@ -15,7 +15,7 @@ Comment.format = function (comments) {
 
     for(let com of comments){
       let c= templateComments;
-      c = c.replace("{{name}}", com.name);
+      c = c.replace("{{name}}", com.user_name);
       c = c.replace("{{date}}", com.created_at);
       c = c.replace("{{content}}", com.content);      
       commentHTML +=c;

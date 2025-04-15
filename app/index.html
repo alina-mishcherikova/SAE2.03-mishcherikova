@@ -230,23 +230,21 @@
       }
 
     }
+
+    
     C.summRating = async function (id_movie) {
   const res = await DataMovie.getAverageRating(id_movie);
   const span = document.querySelector('.average');
 
   console.log("⭐ Note moyenne reçue:", res);
 
-  let score = parseFloat(res.score); 
-
-  if (isNaN(score)) {
+  if (res === null || res == 0) {
     span.textContent = "Pas encore noté";
   } else {
-    score = Math.round(score * 10) / 10;
+    const score = Math.round(res * 10) / 10;
     span.textContent = `${score} / 10`;
   }
 }
-
-
 
     C.handlerSendComment = async function () {
       const id_movie = document.querySelector('.movie-detail').getAttribute('data-id');
