@@ -199,15 +199,37 @@ function addRatingController($id_user, $id_movie, $score) {
 }
 
 function getAverageRatingController($id_movie) {
-  $score = getAverageRating($id_movie);
+  $score = getAverageRating($id_movie); 
   return ["score" => $score];  
 }
+
 
 function getCommentsController($id_movie) {
   return getComments($id_movie);
 }
 
-function addCommentController($id_user, $id_movie, $content, $created_at) {
-  $result = addComment($id_user, $id_movie, $content, $created_at);
-  return ['success' => $result > 0];
+function addCommentController($id_user, $id_movie, $content) {
+  $success = addComment($id_user, $id_movie, $content);
+  return ['success' => $success];
 }
+
+function getCommentsAdmController() {
+  $comments = getCommentsAdm();
+  return $comments;
+}
+
+function approveCommentController($id) {
+  if (approveComment($id)) {
+    return ["success" => true];
+  } else {
+    return ["success" => false];
+  }
+}
+function deleteCommentController($id) {
+  if (deleteComment($id)) {
+    return ["success" => true];
+  } else {
+    return ["success" => false];
+  }
+}
+

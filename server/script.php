@@ -142,13 +142,28 @@ if ( isset($_REQUEST['todo']) ){
     break;
   
   case 'addComment':
-    $id_user = intval($_REQUEST['id_user']);
-    $id_movie = intval($_REQUEST['id_movie']);
-    $content = urldecode($_REQUEST['content']);
-    $created_at = $_REQUEST['created_at'];
-    $data = addCommentController($id_user, $id_movie, $content, $created_at);
+    $id_user = intval($_GET['id_user']);
+    $id_movie = intval($_GET['id_movie']);
+    $content = $_GET['content'];
+    $data = addCommentController($id_user, $id_movie, $content);
     break;
   
+  
+    case 'getCommentsAdm':
+      $data = getCommentsAdmController();
+      break;
+    
+    case 'approveComment':
+      $id = intval($_REQUEST['id']);
+      $data = approveCommentController($id);
+      break;
+    
+    case 'deleteComment':
+      $id = intval($_REQUEST['id']);
+      $data = deleteCommentController($id);
+      break;
+
+      
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée
       echo json_encode('[error] Unknown todo value');
       http_response_code(400); // 400 == "Bad request"

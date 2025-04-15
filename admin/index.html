@@ -18,6 +18,7 @@
     </section>
   </section>
   <section id="recFilms"></section>
+  <section id="comments"></section>
 
   <script type="module">
     import { DataMovie } from "./data/dataMovie.js";
@@ -27,6 +28,8 @@
     import { AddProfile } from "./component/ProfileForm/script.js";
     import { ModifyProfile } from "./component/ModifyForm/script.js";
     import { Recommendation } from "./component/RecommendMovie/script.js";
+    import { Comment } from "./component/Comment/script.js";
+
 
 
     window.C = {};
@@ -163,11 +166,38 @@
       }
     }
 
+    C.handlerModeration = async function () {
+      const comments = await DataMovie.getComments();
+      console.log('COMMENTS:', comments);
+
+      V.renderCommentModeration(comments);
+    }
+
+    C.approveComment = async function (id) {
+      const res = await DataMovie.approveComment(id);
+      if (res.success) {
+        alert("Le commentaire a été approuvé avec succès.");
+        C.handlerModeration();
+      } else {
+        alert("Erreur !");
+      }
+    };
+    C.deleteComment = async function (id) {
+      const res = await DataMovie.deleteComment(id);
+
+      if (res.success) {
+        alert("Le commentaire a été supprimé avec succès.");
+        C.handlerModeration();
+      } else {
+        alert("Erreur !");
+      }
+    };
     C.start = function () {
       V.renderLog("Démarrage de l'application");
       V.renderMovie("C.handlerAddMovie()");
       V.renderProfile("C.handlerAddProfile()");
       V.renderRecForm("C.handlerSearchAdmin()");
+      C.handlerModeration();
       C.loadProfiles();
     };
 
@@ -201,6 +231,10 @@
     V.renderMovieCard = function (data) {
       let content = document.querySelector("#recFilms");
       content.innerHTML = Recommendation.format(data);
+    };
+    V.renderCommentModeration = function (data) {
+      let content = document.querySelector("#comments");
+      content.innerHTML = Comment.format(data);
     };
 
 

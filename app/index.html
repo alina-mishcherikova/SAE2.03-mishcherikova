@@ -85,8 +85,8 @@
       V.renderMovieDetail(film);
 
       const comments = await DataMovie.getComments(id);
+      console.log("📝 Отримані коментарі:", comments);
       V.renderCommentSection(comments);
-
       window.scrollTo({ top: 0, behavior: 'smooth' });
       C.summRating(id);
     };
@@ -232,16 +232,20 @@
     }
     C.summRating = async function (id_movie) {
   const res = await DataMovie.getAverageRating(id_movie);
-
   const span = document.querySelector('.average');
-  console.log("Average rating response:", res);
 
-  if (!res || res == 0) {
+  console.log("⭐ Note moyenne reçue:", res);
+
+  let score = parseFloat(res.score); 
+
+  if (isNaN(score)) {
     span.textContent = "Pas encore noté";
   } else {
-    span.textContent = res;
+    score = Math.round(score * 10) / 10;
+    span.textContent = `${score} / 10`;
   }
 }
+
 
 
     C.handlerSendComment = async function () {
@@ -257,7 +261,7 @@
         return;
       }
 
-      const res = await DataMovie.sendComment(activeProfileId, id_movie, content);
+      const res = await DataMovie.addComment(id_movie, activeProfileId, content);
 
       if (res.success) {
         alert("Commentaire ajouté !");
@@ -268,6 +272,33 @@
       }
     };
 
+
+    C.handlerSendComment = async function () {
+      const id_movie = document.querySelector('.movie-detail').getAttribute('data-id');
+      const content = document.querySelector('.comment__content').value;
+
+      console.log("📨 Надсилаю коментар:", content); // ← 🧪 перевір
+
+      if (!activeProfileId) {
+        alert("Veuillez d'abord choisir un profil.");
+        return;
+      }
+
+      if (!content || content.trim() === "") {
+        alert("Veuillez entrer un commentaire.");
+        return;
+      }
+
+      const res = await DataMovie.addComment(id_movie, activeProfileId, content);
+
+      if (res.success) {
+        alert("Commentaire ajouté !");
+        document.querySelector('.comment__content').value = "";
+        C.handlerDetail(id_movie);
+      } else {
+        alert("Erreur lors de l'enregistrement du commentaire.");
+      }
+    };
 
     window.V = {};
 
@@ -315,6 +346,7 @@
     V.renderCommentSection = function (data) {
       let content = document.querySelector("#commentaire");
       content.innerHTML = Comment.format(data);
+      console.log("Коментарі для відображення:", data);
     };
 
     C.start();

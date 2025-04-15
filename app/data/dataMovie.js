@@ -51,10 +51,18 @@ DataMovie.addRating = async function (id_user, id_movie, score){
   return data;
 }
 
-DataMovie.getAverageRating = async function (id_movie) { 
+DataMovie.getAverageRating = async function (id_movie) {
   let response = await fetch(HOST_URL + '/server/script.php?todo=getAverageRating&id_movie=' + id_movie);
-  let data = await response.json();
-  return data.score;
+  let text = await response.text();
+
+  try {
+    let data = JSON.parse(text);
+    return data.score;
+  } catch (e) {
+    console.error("❌ Erreur de parsing JSON:", e);
+    console.warn("Réponse brute du serveur:", text);
+    return null;
+  }
 }
 
 
@@ -64,10 +72,11 @@ DataMovie.getComments = async function (id_movie){
   return data;
 }
 
-DataMovie.sendComment = async function (id_user, id_movie, content, created_at) {
-  let response = await fetch(`${HOST_URL}/server/script.php?todo=addComment&id_user=${id_user}&id_movie=${id_movie}&content=${encodeURIComponent(content)}&created_at=${created_at}`);
-  let data = await response.json();
-  return data;
+DataMovie.addComment = async function (movieId, profileId, comment) {
+  const url = `${HOST_URL}/server/script.php?todo=addComment&id_movie=${movieId}&id_user=${profileId}&content=${encodeURIComponent(comment)}`;
+
+  let response = await fetch(url);
+  return await response.json();
 };
 
 

@@ -54,4 +54,28 @@ DataMovie.modifyRec = async function (id, recommended) {
     return data;
   }
   
+DataMovie.getComments = async function () {
+    let answer = await fetch(HOST_URL + '/server/script.php?todo=getCommentsAdm');
+    let data = await answer.json();
+    return data;
+}
+
+DataMovie.approveComment = async function (id) {
+    let config = {
+        method: "POST"
+    };
+    let answer = await fetch(HOST_URL + '/server/script.php?todo=approveComment&id=' + id, config);
+    let data = await answer.json();
+    return data;
+}
+DataMovie.deleteComment = async function (id) {
+    let config = {
+        method: "POST"
+    };
+    let answer = await fetch(HOST_URL + '/server/script.php?todo=deleteComment&id=' + id, config);
+    let data = await answer.json();
+    return data;
+}
+
+
 export { DataMovie };

@@ -126,19 +126,20 @@ function MovieDetail($id) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
 
     $sql = "SELECT
-                Movie.id,
-                Movie.name, 
-                year, 
-                length, 
-                description, 
-                director, 
-                Category.name AS category, 
-                image, 
-                trailer, 
-                min_age 
-            FROM Movie 
-            INNER JOIN Category ON Movie.id_category = Category.id
-            WHERE Movie.id = :id";
+            Movie.id,
+            Movie.name, 
+            year, 
+            length, 
+            description, 
+            director, 
+            Category.name AS category, 
+            image, 
+            trailer, 
+            min_age,
+            IFNULL((SELECT ROUND(AVG(score), 1) FROM Rating WHERE Rating.id_movie = Movie.id), 0) AS score
+        FROM Movie 
+        INNER JOIN Category ON Movie.id_category = Category.id
+        WHERE Movie.id = :id";
 
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -311,25 +312,33 @@ function modifyRecommendedMovies($id_movie, $recommended) {
 }
 
 function getComments($id_movie) {
-    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
-    
-    $sql = "SELECT Comment.content, Comment.created_at, Utilisateur.name
-            FROM Comment
-            INNER JOIN Utilisateur ON Comment.id_user = Utilisateur.id
-            WHERE Comment.id_movie = :id_movie
-            ORDER BY Comment.created_at DESC";
+  $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
 
-    $stmt = $cnx->prepare($sql);
-    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
-    $stmt->execute();
+  $sql = "SELECT 
+            Comment.id, 
+            Comment.content, 
+            Comment.created_at, 
+            Comment.status, 
+            Utilisateur.name AS user_name, 
+            Movie.name AS movie_name
+          FROM Comment
+          INNER JOIN Utilisateur ON Comment.id_user = Utilisateur.id
+          INNER JOIN Movie ON Comment.id_movie = Movie.id
+          WHERE Comment.id_movie = :id_movie
+            AND Comment.status = 'Approuvé'";
 
-    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  $stmt = $cnx->prepare($sql);
+  $stmt->execute([":id_movie" => $id_movie]);
+
+  $comments = $stmt->fetchAll(PDO::FETCH_OBJ);
+  return $comments;
 }
+
 
 function addComment($id_user, $id_movie, $content) {
   $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
-  $sql = "INSERT INTO Comment (id_user, id_movie, content, created_at) 
-          VALUES (:id_user, :id_movie, :content, NOW())"; 
+  $sql = "INSERT INTO Comment (id_user, id_movie, content, created_at, status) 
+  VALUES (:id_user, :id_movie, :content, NOW(), 'En attente')";
   $stmt = $cnx->prepare($sql);
   $stmt->execute([
       ':id_user' => $id_user,
@@ -338,4 +347,41 @@ function addComment($id_user, $id_movie, $content) {
   ]);
 
   return $stmt->rowCount() > 0;
+}
+
+function getCommentsAdm() {
+  $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+  
+  $sql = "SELECT Comment.id, Comment.content, Comment.created_at, Comment.status, Utilisateur.name AS user_name, Movie.name AS movie_name 
+          FROM Comment 
+          INNER JOIN Utilisateur ON Comment.id_user = Utilisateur.id 
+          INNER JOIN Movie ON Comment.id_movie = Movie.id 
+          WHERE Comment.status = 'En attente'";
+
+  $stmt = $cnx->prepare($sql);
+  $stmt->execute();
+
+  return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function approveComment($id) {
+  $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
+  $sql = "UPDATE Comment SET status = 'Approuvé' WHERE id = :id";
+  $stmt = $cnx->prepare($sql);
+  $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+
+  return $stmt->rowCount();
+}
+
+function deleteComment($id) {
+  $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
+  $sql = "DELETE FROM Comment WHERE id = :id";
+  $stmt = $cnx->prepare($sql);
+  $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+
+  return $stmt->rowCount();
 }
