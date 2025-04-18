@@ -1,0 +1,26 @@
+  <h4 class="profile__title">Modifier un profil</h4>
+  <form class="profile__form profile__form--edit">
+    <div class="profile__field">
+      <label class="profile__label" for="profils">Pour modifier un profil, sélectionnez-le dans la liste ci-dessous</label>
+      <select class="profile__input" onchange="{{handlerChange}}" name="profils">
+        {{options}}
+      </select>
+    </div>
+
+    <div class="profile__field">
+      <label class="profile__label" for="name">Nom de l'utilisateur *</label>
+      <input class="profile__input" required type="text" name="name" placeholder="Dodo" />
+    </div>
+
+    <div class="profile__field">
+      <label class="profile__label" for="avatar">Avatar de l'utilisateur</label>
+      <input class="profile__input" required type="text" name="avatar" placeholder="dogpicture.jpg" />
+    </div>
+
+    <div class="profile__field">
+      <label class="profile__label" for="date">Date de naissance de l'utilisateur *</label>
+      <input class="profile__input" required type="date" name="date" min="1920-01-01" max="2025-12-31" placeholder="AAAA-MM-JJ" />
+    </div>
+
+    <input onclick="{{handlerUpdate}}" class="profile__button" type="button" value="Modify" name="todo" />
+  </form>

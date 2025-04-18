@@ -1,0 +1,11 @@
+<h2 class="recommended__title text-lg text-accent">Gérer leur statut "mis en avant”</h2>
+<div class="recommended__search">
+<input type="search" id="recommended__search" name="q" class="form-field__input field__input-search"
+  placeholder="Rechercher un film, une date"/>
+<input type="button" class="form__button button__search" onclick="C.handlerSearch()"value="Rechercher" name="todo" onclick="C.handlerSearch()" />
+</div>
+<div class="recommended__list">
+  {{cards}}
+</div>
+
+<input onclick="C.MovieRecCheckbox()" class="form__button button__recomended" type="button" value="Modify" name="todo" />

@@ -1,0 +1,101 @@
+.recommended {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: var(--gap16);
+  height: 30rem;
+  overflow: hidden;
+}
+
+.recommended__cards {
+  display: flex;
+  gap: var(--gap16);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-top: 1rem;
+  height: 100%;
+  align-items: stretch;
+  overflow-y: hidden;
+}
+
+.movie__card {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.movie__recommended {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie__affiche-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.movie__affiche-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(43, 44, 44) 0.2%, rgba(255, 255, 255, 0.1) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.movie__details {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  z-index: 10;
+  width: 85%;
+  color: white;
+}
+
+ .recommended__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 90%;
+  gap: var(--spacing-lg);
+  position: absolute;
+  bottom: 2.5rem;
+  z-index: 10;
+}
+.scroll__btn{
+  background-color: rgba(233, 233, 233, 0.8);
+  border: 1px solid var(--color-black);
+  font-size: 2rem;
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+
+}
+
+@media (min-width: 45rem){
+  .recommended__cards {
+    height: 40rem;
+    overflow-y: hidden;
+    .movie__affiche{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+    .movie__card {
+      flex: 0 0 33.33%;
+      max-width: 33.33%;
+      .movie__affiche{
+        width: 100%;
+        height: 30rem;
+        object-fit: cover;
+        object-position: top;     }
+    }
+  }
+  .recommended__buttons {
+    width: 95%;
+  }
+}

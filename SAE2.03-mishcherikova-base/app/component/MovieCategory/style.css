@@ -1,0 +1,32 @@
+.category__title {
+  font-size: var(--fs-mh2);
+  color: var(--color-fg);
+  font-weight: var(--fw-700);
+  margin-bottom: var(--gap16);
+}
+
+.movies__category {
+  display: flex;
+  flex-direction: column;
+  padding: var(--gap24) var(--gap16);
+  gap: var(--gap16);
+  align-items: center;
+}
+
+.movie__cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  gap: var(--gap24);
+}
+
+@media (min-width: 45rem){
+  .movies__title {
+    font-size: var(--fs-dh2);
+  }
+
+  .movie__cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap32);
+  }
+}

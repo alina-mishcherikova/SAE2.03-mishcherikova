@@ -1,0 +1,18 @@
+.category__section{
+  display: flex;
+  flex-direction: column;
+  padding: var(--font-size-sm);
+  gap:var(--spacing-lg);
+}
+.category__title {
+  font-size: var(--font-size-xl);
+  color: var(--color-fg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.movies__category {
+  padding: var(--gap24) var(--gap16);
+  gap: var(--gap16);
+  align-items: center;
+}

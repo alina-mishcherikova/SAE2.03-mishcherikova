@@ -1,0 +1,17 @@
+.profile__title {
+  color: var(--color-black);
+  font-size: var(--fs-m20);
+  font-weight: var(--fw-600);
+  line-height: 140%;
+}
+
+
+
+/* === Desktop styles === */
+@media (min-width: 45rem){
+  .profile__input,
+  .profile__button {
+    width: 30rem;
+  }
+
+}

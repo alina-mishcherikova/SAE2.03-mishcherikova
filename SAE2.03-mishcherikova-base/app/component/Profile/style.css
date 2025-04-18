@@ -1,0 +1,16 @@
+.user__avatar{
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+}
+.user__profile__container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap24);
+    padding: 2rem 2rem;
+}
+.movie__cards{
+    padding: var(--gap24);
+}

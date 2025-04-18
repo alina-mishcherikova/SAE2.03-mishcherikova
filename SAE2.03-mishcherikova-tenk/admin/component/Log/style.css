@@ -1,0 +1,67 @@
+.log {
+  display: flex;
+  align-items: flex-end;
+  width: 15rem;
+  height: 12rem;
+  padding: 1rem;
+  background-color: var(--color-fg);
+  border: 1px solid var(--color-bg);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.log__list {
+  font-size: var(--font-size-xs);
+  color: var(--color-accent);
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.log__item--last {
+  animation: fade-in 1s ease-in-out;
+}
+
+.log__item--blink {
+  animation: blink 2.5s infinite;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.MoviesEdit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap40);
+}
+
+@media (min-width: 45rem){
+  .log {
+    width: 30rem;
+    height: 10rem;
+    padding: 1rem 1rem 1rem 1.5rem;
+  }
+
+  .log__list {
+    font-size: smaller;
+  }
+}

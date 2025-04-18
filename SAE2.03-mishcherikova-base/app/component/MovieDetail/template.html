@@ -1,0 +1,55 @@
+<section class="movie-detail" data-id="{{id}}">
+  <div class="movie-detail__info">
+    <h2 class="movie-detail__title ff-mh2 text-white">{{name}}</h2>
+
+    <figure class="movie-detail__poster-container">
+      <img src="../server/images/{{image}}"
+        alt="Affiche du film" class="movie-detail__poster" />
+      <figcaption class="movie-detail__description">{{desc}}</figcaption>
+    </figure>
+
+    <div class="movie-detail__info-group">
+      <div class="movie-info">
+        <h4 class="movie-info__label">Réalisé par :</h4>
+        <p class="movie-info__value">{{realisateur}}</p>
+      </div>
+
+      <div class="movie-info">
+        <h4 class="movie-info__label">Année de sortie :</h4>
+        <p class="movie-info__value">{{year}}</p>
+      </div>
+
+      <div class="movie-info">
+        <h4 class="movie-info__label">Catégorie :</h4>
+        <p class="movie-info__value">{{category}}</p>
+      </div>
+
+      <div class="movie-info">
+        <h4 class="movie-info__label">Restrictions d'âge :</h4>
+        <p class="movie-info__value">{{min_age}}</p>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="movie-detail__trailer">
+    <h3 class="movie-detail__trailer-title ff.mh3 ">Trailer</h3>
+    <iframe src="{{VideoUrl}}" class="trailer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+               gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="movie-detail__rating">
+    <div class="rating__title ff-mh3 text-white">
+      Note moyenne: <span class="rating__average" data-id="{{id}}">{{score}}/10</span>
+    </div>
+    <div class="rating__rate">
+      <label for="score" class="rate__label text-white">Votre note :</label>
+      <div class="rate__value">
+      <input type="number" name="score" min="1" max="10" class="rate__input">
+      <button class="btn btn-rate" onclick="{{onclick}}">Noter</button>
+    </div>
+    </div>
+  </div>
+
+</section>

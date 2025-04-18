@@ -1,0 +1,117 @@
+.movie-detail{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap48);
+  padding: 2rem;
+}
+.movie-detail__poster {
+  /* width: 20.9167rem;
+  height: 31.375rem; */
+  width: 100%;
+}
+.movie-detail__poster-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.movie-detail__description {
+  color: var(--color-fg);
+
+  /* Global/Body S */
+  font-size: var(--fs-gs);
+
+}
+.rating__rate {
+  display: flex;
+  flex-direction: row;
+}
+.rate__value{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  gap: var(--gap16);
+}
+.rate__input{
+  height: 1.5rem;
+}
+.movie-detail__info,
+.movie-detail__trailer,
+.movie-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap32);
+}
+
+.movie-info__label {
+  color: var(--color-gray-light);
+  /* Global/Body M/medium */
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  width: 11.25rem;
+}
+
+.movie-info__value {
+  color: var(--color-fg);
+
+  /* Global/Body M/regular */
+  font-size: var(--fs-gm);
+  line-height: 150%;
+}
+
+.movie-detail__trailer-title {
+  color: var(--color-fg);
+
+  /* Mobile/H3 */
+  font-size: var(--fs-mh3);
+  font-weight: var(--fw-600);
+  line-height: 140%;
+}
+
+.movie-detail__info-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap16);
+  align-self: stretch;
+}
+.trailer{
+  width: 100%;
+  height: auto;
+}
+.movie-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.rating__title,.movie__rating{
+  color:var(--color-fg);
+}
+.btn-rate{
+  height: 1.5rem!important;
+  width: 3rem;
+}
+@media (min-width: 45rem){
+  .movie-detail__poster {
+    width: 20.9167rem;
+    height: 31.375rem;
+  }
+  .movie-info {
+    gap: var(--gap40);
+    width:40%;
+  }
+  .movie-info__label {
+    width: 11.25rem;
+  }
+  .movie-detail__info-group {
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    gap: var(--gap24);
+    flex-wrap:wrap;
+  }
+  .trailer{
+    width: 100%;
+    height: 35rem;
+  }
+}

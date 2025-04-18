@@ -1,0 +1,20 @@
+  <h4 class="profile__title text-lg text-accent">Ajouter un profil</h4>
+  <form class="profile__form spacing-md">
+    <div class="form-field">
+      <label class="form-field__label" for="name">Nom de l'utilisateur *</label>
+      <input class="form-field__input" required type="text" name="name" placeholder="Dodo" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="avatar">Avatar de l'utilisateur</label>
+      <input class="form-field__input" required type="text" name="avatar" placeholder="dogpicture.jpg" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="date">Date de naissance de l'utilisateur *</label>
+      <input class="form-field__input" required type="date" name="date" min="1920-01-01" max="2025-12-31"
+        placeholder="AAAA-MM-JJ" />
+    </div>
+
+    <input onclick="{{handler}}" class="form__button" type="button" value="Add" name="todo" />
+  </form>

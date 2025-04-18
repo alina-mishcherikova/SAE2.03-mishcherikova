@@ -1,0 +1,54 @@
+.movie__action {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(158, 158, 158, 0.5);
+  border: 2px solid var(--color-fg);
+  color: var(--color-fg); 
+  width: 2rem;
+  height: 2rem;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.movie__card{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap16);
+}
+.movie__delete {
+  left: 1rem;
+}
+.movie__affiche{
+  width: 100%;
+  height: 20rem;
+  object-fit: cover;
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+}
+
+
+.card__title {
+  max-width: 9.75rem;
+}
+.cards__profile{
+.movie__affiche{
+  width: 100%;
+  height: 20rem;
+}
+}
+
+@media (min-width: 45rem){
+  .cards__profile{
+    .movie__affiche{
+      width: 100%;
+      height: 30rem;
+      object-fit: cover;
+    }}
+}

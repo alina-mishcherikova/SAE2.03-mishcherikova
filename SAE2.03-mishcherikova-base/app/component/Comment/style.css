@@ -1,0 +1,138 @@
+.comment__section {
+  display: flex;
+  flex-direction: column;
+  padding: var(--gap40) var(--gap32);
+  gap: var(--gap24);
+  align-items: stretch;
+}
+
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--gap24);
+}
+
+.comments__aucun {
+  width: 100%;
+  text-align: center;
+}
+
+
+.comment__form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap16);
+  width: 100%;
+}
+
+
+.comment__content {
+  width: 100%;
+  height: 5rem;
+  padding: var(--gap8);
+  border: 1px solid var(--color-gray);
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+
+.btn {
+  width: 100%;
+  height: 3rem;
+  padding: var(--gap8) var(--gap16);
+  background-color: var(--color-fg);
+  color: var(--color-bg);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-gray);
+    color: var(--color-accent);
+  }
+
+  &:active {
+    transform: translate(1px, 1px);
+  }
+}
+
+
+.comment__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap16);
+  padding: var(--gap16);
+  border-bottom: 1px solid var(--color-gray);
+}
+
+
+.comment__header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.user__nickname,
+.comment__date {
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.comment__date {
+  color: var(--color-gray);
+}
+
+
+.comment__users,
+.section__title,
+.comment__title {
+  color: var(--color-fg);
+}
+.form__content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 5rem;
+}
+.comment__send {
+  width: 100%;
+  height:2rem;
+  padding: var(--gap8) var(--gap16);
+  background-color: var(--color-fg);
+  color: var(--color-bg);
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(227, 227, 227, 0.5);
+    color: var(--color-accent);
+  }
+}
+
+
+@media (width > 45rem) {
+  .comment__section {
+    align-items: center;
+  }
+
+  .comments,
+  .comment__form {
+    width: 60%;
+  }
+
+  .comments {
+    gap: var(--gap32);
+  }
+
+  .comment__form {
+    gap: var(--gap24);
+  }
+
+  .comment__header {
+    flex-direction: row;
+    align-items: center;
+  }
+}

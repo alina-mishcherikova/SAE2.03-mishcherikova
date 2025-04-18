@@ -1,0 +1,120 @@
+/* === Mobile-first === */
+.recommended {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 var(--pad16);
+    gap: var(--gap16);
+    width: 100%;
+  }
+  
+  .recommended__title {
+    font-size: var(--fs-m20);
+    font-weight: var(--fw-600);
+    color: var(--color-black);
+    text-align: center;
+  }
+  
+  .recommended__search {
+    height: 2.5rem;
+    width: 20rem;
+    border-radius: 4px;
+    border: 1px solid #DBDBDB;
+    padding: 0 var(--pad12);
+  }
+  
+  .recommended__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap16);
+    width: 100%;
+      .recommended__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap12);
+    align-items: center;
+  }
+  
+  }
+  
+  .recommended__img {
+    width: 9rem;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .recommended__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap8);
+  }
+  
+  .recommended__movie-title {
+    font-size: var(--fs-bmm);
+    font-weight: var(--fw-600);
+    color: var(--color-black);
+  }
+  
+  .recommended__button {
+    display: flex;
+    width: 100%;
+    height: 2.5rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: var(--color-black);
+    color: var(--color-white);
+    border: none;
+    font-weight: var(--fw-500);
+  }
+  .recommended__searchs{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap12);
+    width: 15rem;
+  }
+  .field__input-search{
+    width: 100%;
+  }
+  .button__search{
+    width: fit-content;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-black);
+    color:var(--color-black);
+    &:hover{
+      background-color: var(--color-black);
+      color: var(--color-white);
+    }
+  }
+  .recommended__button {
+   width: 15rem;
+  }
+  /* === Desktop === */
+  @media (min-width: 45rem){
+    .recommended {
+      padding: 0 var(--pad48);
+    }
+  
+    .recommended__title {
+      font-size: var(--fs-m24);
+    }
+  
+    .recommended__search,
+    .recommended__button {
+      width: 30rem;
+    }
+    .recommended__searchs{
+      width: 30rem;
+    }
+
+  
+    .recommended__img {
+      width: 9.75rem;
+      height: 14.625rem;
+    }
+  
+  }
+  

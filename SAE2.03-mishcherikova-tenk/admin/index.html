@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>SAE2.03 ADMIN</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/base.css" />
+</head>
+
+<body>
+  <section id="log" class="section__setting"></section>
+  <section id="addFilm" class="section__setting"></section>
+  <section id="profileForm" class="section__setting"></section>
+  <section id="profileModifForm" class="section__setting"></section>
+  <section id="recFilms" class="section__setting"></section>
+  <section id="comments" class="section__setting"></section>
+
+  <script type="module">
+    import { DataMovie } from "./data/dataMovie.js";
+    import { DataProfile } from "./data/dataProfile.js";
+    import { Log } from "./component/Log/script.js";
+    import { AddNewFilm } from "./component/AddNewFilm/script.js";
+    import { AddProfile } from "./component/ProfileForm/script.js";
+    import { ModifyProfile } from "./component/ModifyForm/script.js";
+    import { Recommendation } from "./component/RecommendMovie/script.js";
+    import { Comment } from "./component/Comment/script.js";
+
+
+
+    window.C = {};
+
+    C.handlerAddMovie = async function () {
+      let form = document.querySelector(".addMovie__form");
+      let fd = new FormData(form);
+      fd.append("name", fd.get("Fname"));
+      const requiredFields = ["name", "realisateur", "annee", "duree", "desc", "categorie", "img", "url", "restriction"];
+      for (let field of requiredFields) {
+        if (!fd.get(field) || fd.get(field).trim() === "") {
+          V.renderLog(`Le champ "${field}" est requis.`);
+          return;
+        }
+      }
+
+      const age = Number(fd.get("restriction"));
+      if (age < 0 || age > 21) {
+        V.renderLog("Âge non valide (0 à 21).");
+        return;
+      }
+
+      const annee = Number(fd.get("annee"));
+      if (annee < 1900 || annee > 2099) {
+        V.renderLog("Année non valide (1900 à 2099).");
+        return;
+      }
+
+      const duree = Number(fd.get("duree"));
+      if (duree <= 0 || duree > 500) {
+        V.renderLog("Durée non valide (1 à 500 min).");
+        return;
+      }
+
+      let res = await DataMovie.update(fd);
+      V.renderLog(res);
+      form.reset();
+    };
+
+    C.handlerAddProfile = async function () {
+      let form = document.querySelector(".profile__form");
+      let fd = new FormData(form);
+
+      const requiredFields = ["name", "date"];
+      for (let field of requiredFields) {
+        if (!fd.get(field) || fd.get(field).trim() === "") {
+          V.renderLog(`Le champ "${field}" est requis.`);
+          return;
+        }
+      }
+
+      let res = await DataMovie.addProfile(fd);
+      V.renderLog(res);
+      form.reset();
+    };
+
+    C.handlerUpdate = async function () {
+      let form = document.querySelector(".profile__form--edit");
+      let fd = new FormData(form);
+
+      let selectedId = form.querySelector("select[name=profils]").value;
+
+      if (!selectedId) {
+        V.renderLog("Veuillez sélectionner un profil à modifier.");
+        return;
+      }
+      fd.append("id", selectedId);
+
+      let res = await DataProfile.update(fd);
+      V.renderLog(res);
+      form.reset();
+    };
+
+    C.changeProfile = async function () {
+      let select = document.querySelector("select[name=profils]");
+      let selectedId = select.value;
+
+
+      if (selectedId === "") {
+        document.querySelector("input[name=name]").value = "";
+        document.querySelector("input[name=avatar]").value = "";
+        document.querySelector("input[name=date]").value = "";
+        return;
+      }
+
+      let profiles = await DataProfile.read();
+      let selectedProfile = profiles.find(p => p.id == selectedId);
+      if (selectedProfile) {
+        ModifyProfile.autoFill(selectedProfile);
+      }
+    };
+
+
+    C.loadProfiles = async function () {
+      let profiles = await DataProfile.read();
+      V.renderModifProfile("C.changeProfile", "C.handlerUpdate", profiles);
+    };
+
+
+    C.MovieRecCheckbox = async function () {
+      let checkboxes = document.querySelectorAll('input[name="recommended"]');
+
+      for (let checkbox of checkboxes) {
+        let id = checkbox.getAttribute('data-id');
+        let recommended;
+
+        if (checkbox.checked) {
+          recommended = 1;
+        } else {
+          recommended = 0;
+        }
+
+        await DataMovie.modifyRec(id, recommended);
+      }
+
+      V.renderLog("Le statut des films a été mis à jour avec succès !");
+      form.reset();
+    }
+
+
+    C.handlerSearch = async function () {
+        const keyword = document.getElementById('recommended__search').value;
+
+        if (!keyword || keyword.replaceAll(" ", "") === "") {
+          const movies = await DataMovie.requestMoviesApp();
+          V.renderMovieCard(movies);
+          return;
+        }
+
+        const movies = await DataMovie.searchMoviesApp(keyword);
+
+        if (movies.length === 0) {
+          document.querySelector("#recFilms").innerHTML = `<p class="aucun__movie">Aucun film trouvé.</p>`;
+        } else {
+          V.renderMovieCard(movies);
+        }
+      }
+    
+
+    C.handlerModeration = async function () {
+      const comments = await DataMovie.getComments();
+      V.renderCommentModeration(comments);
+    }
+
+    C.approveComment = async function (id) {
+      const res = await DataMovie.approveComment(id);
+      if (res.success) {
+        alert("Le commentaire a été approuvé avec succès.");
+        C.handlerModeration();
+      } else {
+        alert("Erreur !");
+      }
+    };
+    C.deleteComment = async function (id) {
+      const res = await DataMovie.deleteComment(id);
+
+      if (res.success) {
+        alert("Le commentaire a été supprimé avec succès.");
+        C.handlerModeration();
+      } else {
+        alert("Erreur !");
+      }
+    };
+    C.start = function () {
+      V.renderLog("Démarrage de l'application");
+      V.renderMovie("C.handlerAddMovie()");
+      V.renderProfile("C.handlerAddProfile()");
+      V.renderRecForm("C.handlerSearchAdmin()");
+      C.handlerModeration();
+      C.loadProfiles();
+    };
+
+
+    window.V = {};
+
+    V.renderLog = function (txt) {
+      let content = document.querySelector("#log");
+      content.innerHTML = Log.format(txt);
+    };
+
+    V.renderRecForm = function (handler) {
+      let content = document.querySelector("#recFilms");
+      content.innerHTML = Recommendation.format(handler);
+    };
+
+    V.renderMovie = function (handler) {
+      let content = document.querySelector("#addFilm");
+      content.innerHTML = AddNewFilm.format(handler);
+    };
+
+    V.renderModifProfile = function (handlerC, handlerU, profiles = []) {
+      let content = document.querySelector("#profileModifForm");
+      content.innerHTML = ModifyProfile.format(handlerC, handlerU, profiles);
+    };
+
+    V.renderProfile = function (handler) {
+      let content = document.querySelector("#profileForm");
+      content.innerHTML = AddProfile.format(handler);
+    };
+    V.renderMovieCard = function (data) {
+      let content = document.querySelector("#recFilms");
+      content.innerHTML = Recommendation.format(data);
+    };
+    V.renderCommentModeration = function (data) {
+      let content = document.querySelector("#comments");
+      content.innerHTML = Comment.format(data);
+    };
+
+
+    C.start();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+.user__profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:var( --spacing-lg);
+    padding: var(--spacing-md) var(--spacing-md) var( --spacing-xl) var(--spacing-md);
+}
+.user__avatar{
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+}
+.aucun__movie{
+    color: var(--color-gray-700);
+    text-align: center;
+}
+.user__profile__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+}
+.user__name{
+    font-weight: 600;
+}
+.user__profile--text{
+    font-weight: 600;
+
+}
+.films__cards{
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    justify-content: center;
+    text-align: center;
+}

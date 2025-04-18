@@ -1,0 +1,23 @@
+<div class="moderation__item" data-id="{{id}}">
+  <h2 class="comment__title text-lg text-accent">Commentaires laissés</h2>
+  <div class="comment">
+    <div class="comment__container">
+    <div class="comment__header">
+      <div class="header__user">
+        <h4 class="comment__user ">{{name}}</h4>
+        <p class="comment__date ">{{date}}</p>
+      </div>
+      <div class="header__movie">
+        <p class="comment__movie">{{movie}}</p>
+        <p class="comment__status">{{status}}</p>
+      </div>
+    </div>
+
+    <p class="comment__content">{{content}}</p>
+    </div>
+    <div class="comment__actions">
+      <button class="btn btn--approve" onclick="{{handlerApprouved}}">Approuver</button>
+      <button class="btn btn--delete" onclick="{{handlerDelete}}">Supprimer</button>
+    </div>
+  </div>
+</div>

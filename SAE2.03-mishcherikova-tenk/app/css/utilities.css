@@ -1,0 +1,23 @@
+/*colors*/
+.text-black { color: var(--color-black); }
+.text-white { color: var(--color-white); }
+.text-accent { color: var(--color-accent); }
+.text-error { color: var(--color-error); }
+.bg-white { background-color: var(--color-white); }
+.bg-black { background-color: var(--color-black); }
+.bg-accent { background-color: var(--color-accent); }
+
+/*Font*/
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-md { font-size: var(--font-size-md); }
+.text-navd { font-size: var(--font-size-nav); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+
+
+/* Flex */
+.flex{ display: flex; }
+.flex-row { flex-direction: row; }
+.flex-column { flex-direction: column; }
+

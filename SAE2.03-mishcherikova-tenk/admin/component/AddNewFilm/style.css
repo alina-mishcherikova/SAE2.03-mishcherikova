@@ -1,0 +1,60 @@
+.addMovie__title {
+  color: var(--color-black);
+  font-size: var(--fs-m20); 
+  font-weight: var(--fw-600);
+  line-height: 140%;
+}
+
+.addMovie__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sx);
+  width: fit-content;
+}
+
+.form-field__label {
+  color: var(--color-black);
+  font-size: var(--font-size-xs);
+  width: 80%;
+}
+.form-field__input,
+.form-field__select {
+  height: 2.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #DBDBDB;
+  width:15rem;
+}
+
+.form__button {
+  display: flex;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 var(--pad12);
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+  background: var(--color-black);
+  color: var(--color-white);
+  border: none;
+  text-decoration: none;
+}
+
+/* ==== Desktop styles only ==== */
+@media (min-width: 45rem){
+  .form-field__label,
+  .form-field__input,
+  .form-field__select,
+  .form-field__button{
+    width: 30rem;
+  }
+  .form-field__label {
+    font-size: var(--font-size-sm);
+  }
+}

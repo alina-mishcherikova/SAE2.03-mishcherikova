@@ -1,0 +1,37 @@
+<input type="checkbox" id="menu-toggle" hidden>
+
+<nav class="navbar">
+  <ul class="navbar__list">
+  
+    <li class="navbar__item navbar__burger">
+      <label for="menu-toggle">
+        <svg class="burger__icon" viewBox="0 0 24 24" fill="none">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="white" stroke-width="2" />
+        </svg>
+      </label>
+    </li>
+
+    <div class="navbar__menu">
+      <li class="navbar__item navbar__navigation" onclick="window.location.href='index.html'">Home</li>
+      <li class="navbar__item navbar__navigation" onclick="{{hAbout}}">About</li>
+    </div>
+  </ul>
+
+  <ul class="navbar__list navbar__list--right">
+    <li class="navbar__item">
+      <div class="searchbar">
+        <input type="checkbox" id="toggle-search" class="searchbar__toggle" hidden>
+        <input type="search" id="site-search" class="searchbar__input" name="q" placeholder="Rechercher un film, une date" onkeyup="C.handlerSearch(event)" />
+      </div>
+    </li>
+
+    <li class="navbar__item navbar-select">
+      <div class="profile__block">
+        <select name="profile" id="profile-select">
+          {{profiles}}
+        </select>
+        <img class="profile__img" src="../server/avatar/{{avatar}}" alt="{{name}} Photo" onclick="C.handlerProfilePage()" />
+      </div>
+    </li>
+  </ul>
+</nav>

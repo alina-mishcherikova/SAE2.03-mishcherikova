@@ -1,0 +1,55 @@
+<section class="detail__section" data-id="{{id}}">
+  <div class="detail__info">
+    <div class="detail__poster-container">
+      <img src="../server/images/{{image}}"
+        alt="Affiche du film" class="detail__poster" />
+    </div>
+
+    <div class="movie-detail__desc">
+      <h2 class="movie-detail__title text-lg text-white">{{name}}</h2>
+      <p class="movie-detail__meta-value text-white">{{realisateur}}</p>
+    </div>
+
+    <div class="movie-detail__info-group">
+      <div class="movie-detail__meta">
+        <h4 class="movie-detail__meta-label">Année de sortie :</h4>
+        <p class="movie-detail__meta-value">{{year}}</p>
+      </div>
+
+      <div class="movie-detail__meta">
+        <h4 class="movie-detail__meta-label">Catégorie :</h4>
+        <p class="movie-detail__meta-value">{{category}}</p>
+      </div>
+
+      <div class="movie-detail__meta">
+        <h4 class="movie-detail__meta-label">Restrictions d'âge :</h4>
+        <p class="movie-detail__meta-value">{{min_age}}</p>
+      </div>
+      <div class="movie-detail__meta">
+        <h4 class="movie-detail__meta-label">Résumé :</h4>
+        <p class="movie-detail__meta-value">{{desc}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="movie-detail__trailer">
+    <h3 class="movie-detail__trailer-title text-lg text-black">Trailer</h3>
+    <iframe src="{{VideoUrl}}" class="movie-detail__trailer-frame" title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+    </iframe>
+  </div>
+  <div class="movie-detail__rating">
+    <div class="rating__title text-lg text-black">
+      Note moyenne: <span class="rating__average" data-id="{{id}}">{{score}}/10</span>
+    </div>
+    <div class="rating__rate">
+      <label for="score" class="rate__label">Votre note :</label>
+      <div class="rate__value">
+      <input type="number" name="score" min="1" max="10" class="rate__input">
+      <button class="button" onclick="{{onclick}}">Noter</button>
+    </div>
+    </div>
+  </div>
+  
+</section>

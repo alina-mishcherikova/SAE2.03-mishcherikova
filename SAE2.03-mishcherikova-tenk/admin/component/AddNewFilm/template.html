@@ -1,0 +1,61 @@
+  <h4 class="addMovie__title text-lg text-accent">Ajouter un film</h4>
+  <form class="addMovie__form spacing-md">
+    <div class="form-field">
+      <label class="form-field__label" for="titre">Titre du film *</label>
+      <input class="form-field__input" required type="text" name="Fname" placeholder="Interstellar" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="realisateur">Réalisateur(s) du film *</label>
+      <input class="form-field__input" required type="text" name="realisateur" placeholder="Christopher Nolan"
+        pattern="[^0-9]*" title="Numbers are not allowed" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="annee">Année de sortie *</label>
+      <input class="form-field__input" required type="number" name="annee" min="1900" max="2099" step="1" placeholder="2014" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="duree">Durée en minutes *</label>
+      <input class="form-field__input" required type="number" name="duree" min="0" max="500" step="1" placeholder="169" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="desc">Description ou synopsis *</label>
+      <input class="form-field__input" required type="text" name="desc" placeholder="Un groupe d'explorateurs voyage ...." />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="categorie">Catégorie *</label>
+      <select class="form-field__select" name="categorie">
+        <option value="1">Action</option>
+        <option value="2">Comédie</option>
+        <option value="3">Drame</option>
+        <option value="4">Science-fiction</option>
+        <option value="5">Animation</option>
+        <option value="6">Thriller</option>
+        <option value="7">Horreur</option>
+        <option value="8">Aventure</option>
+        <option value="9">Fantaisie</option>
+        <option value="10">Documentaire</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="img">Nom du fichier de l'affiche</label>
+      <input class="form-field__input" required type="text" name="img" placeholder="interstellar.jpg" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="url">URL du trailer</label>
+      <input class="form-field__input" required type="url" name="url" placeholder="https://www.youtube.com/embed/..." />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="restriction">Restrictions d'âge *</label>
+      <input class="form-field__input" required type="number" name="restriction" placeholder="12" />
+    </div>
+
+    <input onclick="{{handler}}" class="form__button" type="button" value="Add" name="todo" />
+  </form>
